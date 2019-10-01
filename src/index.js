@@ -1,4 +1,8 @@
-export function model(types, link, flags = 0) {
+import * as utils from './utils';
+
+const interceptors = new Map(Object.entries({ model: a => a, link: a => a }));
+
+export function model(types, link = utils.getDefaultLink(), flags = flag.BASE) {
     const search = new URLSearchParams(link);
 
     const isStrict = Boolean(flags & flag.STRICT);
@@ -6,11 +10,13 @@ export function model(types, link, flags = 0) {
 
     // Whether to include default values if they're not present in the URL
     // params.
-    const keys = hasDefaults ? Object.keys(types) : [...search.keys()];
+    const keys = hasDefaults
+        ? Object.keys(types)
+        : [...search.keys()].map(interceptors.get('model'));
 
     return keys.reduce((accum, key) => {
         const type = types[key];
-        const value = search.get(key);
+        const value = search.get(interceptors.get('link')(key));
 
         // In strict mode only the types that have been defined will be included in
         // the yielded model.
@@ -21,7 +27,7 @@ export function model(types, link, flags = 0) {
     }, {});
 }
 
-export function link(types, model, flags = 0) {
+export function link(types, model, flags = flag.BASE) {
     const search = new URLSearchParams();
 
     const isStrict = Boolean(flags & flag.STRICT);
@@ -40,21 +46,30 @@ export function link(types, model, flags = 0) {
         if (!type)
             return isStrict
                 ? null
-                : void (value != null && search.set(key, value));
+                : void (
+                      value != null &&
+                      search.set(interceptors.get('link')(key), value)
+                  );
 
         const typedValue = value != null ? type.asStr(value) : type.def;
 
         // Omit null values in the links.
         if (value === null || typedValue == null) return;
 
-        search.set(key, typedValue);
+        search.set(interceptors.get('link')(key), typedValue);
     });
 
     const isEmpty = [...search.keys()].length === 0;
     return isEmpty ? '' : `?${search.toString()}`;
 }
 
+export const interceptor = {
+    model: fn => interceptors.set('model', fn),
+    link: fn => interceptors.set('link', fn),
+};
+
 export const flag = {
+    BASE: 0,
     STRICT: 1,
     DEFAULTS: 2,
 };

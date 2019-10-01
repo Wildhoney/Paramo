@@ -1,4 +1,5 @@
 import test from 'ava';
+import * as humps from 'humps';
 import * as paramo from '../src';
 
 const types = {
@@ -79,3 +80,24 @@ test('It should be able to parse into a model including default params;', t => {
         t.is(link, '?telephone=1234567890');
     }
 });
+
+test.serial(
+    'It should be able to setup interceptors to handle the key conversions;',
+    t => {
+        paramo.interceptor.model(humps.camelize);
+        paramo.interceptor.link(humps.decamelize);
+
+        const types = {
+            isDeveloper: paramo.type.Bool(),
+        };
+
+        const model = paramo.model(types, 'is_developer=true');
+        t.deepEqual(model, { isDeveloper: true });
+
+        const link = paramo.link(types, { isDeveloper: true });
+        t.is(link, '?is_developer=true');
+
+        paramo.interceptor.model(a => a);
+        paramo.interceptor.link(a => a);
+    },
+);
