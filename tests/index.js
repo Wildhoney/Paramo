@@ -1,22 +1,29 @@
 import test from 'ava';
 import * as humps from 'humps';
-import * as paramo from '../src';
+import {
+    parse,
+    stringify,
+    setParser,
+    setStringifier,
+    type,
+    flag,
+} from '../src';
 
 const types = {
-    name: paramo.type.String('Adam'),
-    age: paramo.type.Int(33),
-    telephone: paramo.type.String('1234567890'),
+    name: type.String('Adam'),
+    age: type.Int(33),
+    telephone: type.String('1234567890'),
 };
 
 test('It should be able to parse into a model of their associated types;', t => {
-    const model = paramo.model(types, 'name=Adam&age=33&country=UK');
+    const model = parse(types, 'name=Adam&age=33&country=UK');
     t.deepEqual(model, { name: 'Adam', age: 33, country: 'UK' });
 
-    const link = paramo.link(types, { name: 'Adam', age: 33, country: 'UK' });
+    const link = stringify(types, { name: 'Adam', age: 33, country: 'UK' });
     t.is(link, '?name=Adam&age=33&country=UK');
 
     {
-        const link = paramo.link(types, {
+        const link = stringify(types, {
             name: 'Adam',
             age: null,
             country: null,
@@ -26,57 +33,45 @@ test('It should be able to parse into a model of their associated types;', t => 
 });
 
 test('It should be able to parse into a model including superfluous params;', t => {
-    const model = paramo.model(
-        types,
-        'name=Adam&age=33&country=UK',
-        paramo.flag.STRICT,
-    );
+    const model = parse(types, 'name=Adam&age=33&country=UK', flag.STRICT);
     t.deepEqual(model, { name: 'Adam', age: 33 });
 
-    const link = paramo.link(types, { name: 'Adam', age: 33 });
+    const link = stringify(types, { name: 'Adam', age: 33 });
     t.is(link, '?name=Adam&age=33');
 
     {
         // Remove a selection of the params and none of the defaults.
-        const link = paramo.link(types, { name: null, age: 33 });
+        const link = stringify(types, { name: null, age: 33 });
         t.is(link, '?age=33');
     }
 
     {
         // Remove all of the params and include none of the defaults.
-        const link = paramo.link(types, { name: null, age: null });
+        const link = stringify(types, { name: null, age: null });
         t.is(link, '');
     }
 });
 
 test('It should be able to parse into a model including default params;', t => {
-    const model = paramo.model(
-        types,
-        'name=Adam&age=33&country=UK',
-        paramo.flag.DEFAULTS,
-    );
+    const model = parse(types, 'name=Adam&age=33&country=UK', flag.DEFAULTS);
     t.deepEqual(model, { name: 'Adam', age: 33, telephone: '1234567890' });
 
-    const link = paramo.link(types, { name: 'Adam' }, paramo.flag.DEFAULTS);
+    const link = stringify(types, { name: 'Adam' }, flag.DEFAULTS);
     t.is(link, '?name=Adam&age=33&telephone=1234567890');
 
     {
         // Remove the `age` param but also include any defaults.
-        const link = paramo.link(
+        const link = stringify(
             types,
             { name: 'Adam', age: null },
-            paramo.flag.DEFAULTS,
+            flag.DEFAULTS,
         );
         t.is(link, '?name=Adam&telephone=1234567890');
     }
 
     {
         // Remove both of the defined params but leave the defaults.
-        const link = paramo.link(
-            types,
-            { name: null, age: null },
-            paramo.flag.DEFAULTS,
-        );
+        const link = stringify(types, { name: null, age: null }, flag.DEFAULTS);
         t.is(link, '?telephone=1234567890');
     }
 });
@@ -84,20 +79,20 @@ test('It should be able to parse into a model including default params;', t => {
 test.serial(
     'It should be able to setup interceptors to handle the key conversions;',
     t => {
-        paramo.interceptor.toModel(humps.camelize);
-        paramo.interceptor.toLink(humps.decamelize);
+        setParser(humps.camelize);
+        setStringifier(humps.decamelize);
 
         const types = {
-            isDeveloper: paramo.type.Bool(),
+            isDeveloper: type.Bool(),
         };
 
-        const model = paramo.model(types, 'is_developer=true');
+        const model = parse(types, 'is_developer=true');
         t.deepEqual(model, { isDeveloper: true });
 
-        const link = paramo.link(types, { isDeveloper: true });
+        const link = stringify(types, { isDeveloper: true });
         t.is(link, '?is_developer=true');
 
-        paramo.interceptor.toModel(a => a);
-        paramo.interceptor.toLink(a => a);
+        setParser(a => a);
+        setStringifier(a => a);
     },
 );
