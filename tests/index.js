@@ -10,9 +10,9 @@ import {
 } from '../src';
 
 const types = {
-    name: type.String('Adam'),
-    age: type.Int(33),
-    telephone: type.String('1234567890'),
+    name: [type.String, 'Adam'],
+    age: [type.Int, 33],
+    telephone: [type.String, '1234567890'],
 };
 
 test('It should be able to parse into a model of their associated types;', t => {
@@ -83,7 +83,7 @@ test.serial(
         setStringifier(humps.decamelize);
 
         const types = {
-            isDeveloper: type.Bool(),
+            isDeveloper: type.Bool,
         };
 
         const model = parse(types, 'is_developer=true');

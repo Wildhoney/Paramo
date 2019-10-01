@@ -27,7 +27,8 @@ export function parse(types, link = utils.getDefaultLink(), flags = flag.BASE) {
         // the yielded model.
         if (!type) return isStrict ? accum : { ...accum, [key]: value };
 
-        const typedValue = value != null ? type.asType(value) : type.def;
+        const [typer, defaultValue = null] = [].concat(type);
+        const typedValue = value != null ? typer.asType(value) : defaultValue;
         return { ...accum, [key]: typedValue };
     }, {});
 }
@@ -55,7 +56,8 @@ export function stringify(types, model, flags = flag.BASE) {
                 ? null
                 : void (value != null && search.set(stringifier(key), value));
 
-        const typedValue = value != null ? type.asStr(value) : type.def;
+        const [typer, defaultValue = null] = [].concat(type);
+        const typedValue = value != null ? typer.asStr(value) : defaultValue;
 
         // Omit null values in the links.
         if (value === null || typedValue == null) return;
@@ -78,19 +80,16 @@ export const flag = {
 };
 
 export const type = {
-    String: (def = null) => ({
-        def,
+    String: {
         asType: String,
         asStr: String,
-    }),
-    Int: (def = null) => ({
-        def,
+    },
+    Int: {
         asType: Number,
         asStr: String,
-    }),
-    Bool: (def = null) => ({
-        def,
+    },
+    Bool: {
         asType: value => ['1', 'yes', 'true'].includes(value),
         asStr: value => (value === true ? 'true' : 'false'),
-    }),
+    },
 };
