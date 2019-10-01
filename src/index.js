@@ -5,6 +5,9 @@ const interceptors = new Map(Object.entries({ model: a => a, link: a => a }));
 export function model(types, link = utils.getDefaultLink(), flags = flag.BASE) {
     const search = new URLSearchParams(link);
 
+    const toModel = interceptors.get('model');
+    const toLink = interceptors.get('link');
+
     const isStrict = Boolean(flags & flag.STRICT);
     const hasDefaults = Boolean(flags & flag.DEFAULTS);
 
@@ -12,11 +15,11 @@ export function model(types, link = utils.getDefaultLink(), flags = flag.BASE) {
     // params.
     const keys = hasDefaults
         ? Object.keys(types)
-        : [...search.keys()].map(interceptors.get('model'));
+        : [...search.keys()].map(toModel);
 
     return keys.reduce((accum, key) => {
         const type = types[key];
-        const value = search.get(interceptors.get('link')(key));
+        const value = search.get(toLink(key));
 
         // In strict mode only the types that have been defined will be included in
         // the yielded model.
@@ -29,6 +32,8 @@ export function model(types, link = utils.getDefaultLink(), flags = flag.BASE) {
 
 export function link(types, model, flags = flag.BASE) {
     const search = new URLSearchParams();
+
+    const toLink = interceptors.get('link');
 
     const isStrict = Boolean(flags & flag.STRICT);
     const hasDefaults = Boolean(flags & flag.DEFAULTS);
@@ -46,17 +51,14 @@ export function link(types, model, flags = flag.BASE) {
         if (!type)
             return isStrict
                 ? null
-                : void (
-                      value != null &&
-                      search.set(interceptors.get('link')(key), value)
-                  );
+                : void (value != null && search.set(toLink(key), value));
 
         const typedValue = value != null ? type.asStr(value) : type.def;
 
         // Omit null values in the links.
         if (value === null || typedValue == null) return;
 
-        search.set(interceptors.get('link')(key), typedValue);
+        search.set(toLink(key), typedValue);
     });
 
     const isEmpty = [...search.keys()].length === 0;
@@ -64,8 +66,8 @@ export function link(types, model, flags = flag.BASE) {
 }
 
 export const interceptor = {
-    model: fn => interceptors.set('model', fn),
-    link: fn => interceptors.set('link', fn),
+    toModel: fn => interceptors.set('model', fn),
+    toLink: fn => interceptors.set('link', fn),
 };
 
 export const flag = {

@@ -84,8 +84,8 @@ test('It should be able to parse into a model including default params;', t => {
 test.serial(
     'It should be able to setup interceptors to handle the key conversions;',
     t => {
-        paramo.interceptor.model(humps.camelize);
-        paramo.interceptor.link(humps.decamelize);
+        paramo.interceptor.toModel(humps.camelize);
+        paramo.interceptor.toLink(humps.decamelize);
 
         const types = {
             isDeveloper: paramo.type.Bool(),
@@ -97,7 +97,7 @@ test.serial(
         const link = paramo.link(types, { isDeveloper: true });
         t.is(link, '?is_developer=true');
 
-        paramo.interceptor.model(a => a);
-        paramo.interceptor.link(a => a);
+        paramo.interceptor.toModel(a => a);
+        paramo.interceptor.toLink(a => a);
     },
 );
