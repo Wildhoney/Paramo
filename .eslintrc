@@ -1,0 +1,5 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["standard", "prettier", "prettier/standard"],
+    "rules": {}
+}
