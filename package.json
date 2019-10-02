@@ -9,7 +9,7 @@
   "scripts": {
     "test": "yarn spec",
     "spec": "ava",
-    "format": "prettier --write '**/**.{js,html}'"
+    "format": "prettier --write '**/**.{js,html,md}'"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-methods": "^7.6.0",
@@ -20,5 +20,7 @@
     "humps": "^2.0.1",
     "prettier": "^1.18.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "query-string": "^6.8.3"
+  }
 }
