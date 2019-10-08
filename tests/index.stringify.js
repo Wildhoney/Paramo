@@ -14,6 +14,44 @@ test('It should be able to handle basic parameters;', t => {
     t.is(userParams.stringify({ name: 'Adam', age: 33 }), '?name=Adam&age=33');
 });
 
+test('It should be able to handle array parameters;', t => {
+    const userParams = create(
+        {
+            ...types,
+            name: type.Array(type.String),
+            age: type.Array(type.Int),
+            isDeveloper: type.Array(type.Bool),
+        },
+        { ...options, arrayFormat: 'comma' },
+    );
+
+    t.is(
+        userParams.stringify({
+            name: ['Adam', 'Maria'],
+            age: [33, 28],
+            isDeveloper: [true, false],
+        }),
+        '?name=Adam,Maria&age=33,28&isDeveloper=true,false',
+    );
+});
+
+test('It should be able to handle tuple parameters;', t => {
+    const userParams = create(
+        {
+            ...types,
+            person: type.Tuple(type.String, type.Int, type.Bool),
+        },
+        { ...options, arrayFormat: 'comma' },
+    );
+
+    t.is(
+        userParams.stringify({
+            person: ['Adam', 33, true],
+        }),
+        '?person=Adam,33,true',
+    );
+});
+
 test('It should be able to exclude explicit null values from the parameters;', t => {
     const userParams = create(types, options);
     t.is(userParams.stringify({ name: 'Adam', age: null }), '?name=Adam');

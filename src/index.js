@@ -37,4 +37,16 @@ export const type = {
         toString: ({ booleanStrings }) => value =>
             value === true ? booleanStrings[0] : booleanStrings[1],
     },
+    Array: type => ({
+        toType: options => values =>
+            values.map(value => type.toType(options)(value)),
+        toString: options => values =>
+            values.map(value => type.toString(options)(value)),
+    }),
+    Tuple: (...types) => ({
+        toType: options => values =>
+            values.map((value, index) => types[index].toType(options)(value)),
+        toString: options => values =>
+            values.map((value, index) => types[index].toString(options)(value)),
+    }),
 };

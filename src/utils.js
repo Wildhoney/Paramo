@@ -13,9 +13,9 @@ function getType(type, options) {
     return { toType, toString, defaultValue };
 }
 
-export function parse(types, options) {
+export function parse(types, { arrayFormat, ...options }) {
     return (params = getDefaultParams()) => {
-        const parsedParams = qs.parse(params);
+        const parsedParams = qs.parse(params, { arrayFormat });
 
         // Including defaults should take from both the types and the parameters.
         const keys = options.includeDefaults
@@ -42,7 +42,7 @@ export function parse(types, options) {
     };
 }
 
-export function stringify(types, options) {
+export function stringify(types, { arrayFormat, ...options }) {
     return params => {
         const keys = options.includeDefaults
             ? Object.keys({ ...params, ...types })
@@ -69,6 +69,8 @@ export function stringify(types, options) {
         }, {});
 
         const isEmpty = Object.keys(parsedParams).length === 0;
-        return isEmpty ? '' : `?${qs.stringify(parsedParams, { sort: false })}`;
+        return isEmpty
+            ? ''
+            : `?${qs.stringify(parsedParams, { sort: false, arrayFormat })}`;
     };
 }
