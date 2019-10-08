@@ -2,12 +2,12 @@ import test from 'ava';
 import { create, type } from '../../src';
 
 const types = {
-    name: [type.String, 'Adam'],
-    isDeveloper: [type.Bool, true],
+    name: type.String,
+    isDeveloper: type.Bool,
 };
 
-test('It should be able to sanitize boolean parameters;', t => {
-    const userParams = create({ ...types, isDeveloper: type.Bool }, {});
+test('It should be able to sanitize boolean types;', t => {
+    const userParams = create(types, {});
     t.deepEqual(userParams.parse('name=Adam&isDeveloper=true'), {
         name: 'Adam',
         isDeveloper: true,
