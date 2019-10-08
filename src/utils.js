@@ -36,8 +36,14 @@ export function parse(types, { arrayFormat, ...options }) {
             // Parse the type into its type, unless it is a null value in which case
             // we'll use the default value.
             const { toType, defaultValue } = getType(type, options);
-            const parsedValue = value != null ? toType(value) : defaultValue;
-            return { ...model, [key]: parsedValue };
+
+            try {
+                const parsedValue =
+                    value != null ? toType(value) : defaultValue;
+                return { ...model, [key]: parsedValue };
+            } catch {
+                return model;
+            }
         }, {});
     };
 }
