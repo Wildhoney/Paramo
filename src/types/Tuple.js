@@ -1,6 +1,8 @@
 export default (...types) => ({
-    toType: options => values => {
-        if (!Array.isArray(values)) throw new Error('Invalid type.Tuple');
+    toType: options => value => {
+        if (!Array.isArray(value) && value.includes(','))
+            throw new Error('Invalid t.Array');
+        const values = Array.isArray(value) ? value : [].concat(value);
         return values.map((value, index) =>
             types[index].toType(options)(value),
         );

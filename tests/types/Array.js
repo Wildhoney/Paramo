@@ -8,9 +8,15 @@ const types = {
 
 test('It should be able to sanitize array types;', t => {
     const userParams = create(types, { arrayFormat: 'comma' });
+
     t.deepEqual(userParams.parse('name=Adam&latestRatings=5,18,24,9'), {
         name: 'Adam',
         latestRatings: [5, 18, 24, 9],
+    });
+
+    t.deepEqual(userParams.parse('name=Adam&latestRatings=5'), {
+        name: 'Adam',
+        latestRatings: [5],
     });
 
     {

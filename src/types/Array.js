@@ -1,6 +1,8 @@
 export default type => ({
-    toType: options => values => {
-        if (!Array.isArray(values)) throw new Error('Invalid type.Array');
+    toType: options => value => {
+        if (!Array.isArray(value) && value.includes(','))
+            throw new Error('Invalid t.Array');
+        const values = Array.isArray(value) ? value : [].concat(value);
         return values.map(value => type.toType(options)(value));
     },
     toString: options => values =>

@@ -9,7 +9,7 @@ const types = {
 
 const options = {};
 
-test.only('It should be able to handle basic parameters;', t => {
+test('It should be able to handle basic parameters;', t => {
     const userParams = create(types, options);
     t.deepEqual(userParams.parse('name=Adam&age=33'), {
         name: 'Adam',
