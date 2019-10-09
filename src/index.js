@@ -28,6 +28,7 @@ export function create(types, options = defaultOptions) {
 export const type = {
     String: t.String,
     Int: t.Int,
+    BigInt: t.BigInt,
     Float: t.Float,
     Bool: t.Bool,
     Date: t.Date,

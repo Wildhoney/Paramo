@@ -12,6 +12,20 @@ const options = {};
 test('It should be able to handle basic parameters;', t => {
     const userParams = create(types, options);
     t.is(userParams.stringify({ name: 'Adam', age: 33 }), '?name=Adam&age=33');
+
+    {
+        const userParams = create(
+            { ...types, birthDate: type.Date },
+            { ...options, dateFormat: 'yyyy-MM-dd' },
+        );
+        t.is(
+            userParams.stringify({
+                name: 'Adam',
+                birthDate: new Date(Date.parse('10-10-1985')),
+            }),
+            '?name=Adam&birthDate=1985-10-10',
+        );
+    }
 });
 
 test('It should be able to handle array parameters;', t => {
