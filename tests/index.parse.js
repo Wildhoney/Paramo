@@ -26,6 +26,14 @@ test('It should be able to handle basic parameters;', t => {
             birthDate: new Date('10-10-1985'),
         });
     }
+
+    {
+        const userParams = create({ ...types, age: type.Float.DP(3) }, options);
+        t.deepEqual(userParams.parse('name=Adam&age=33.000'), {
+            name: 'Adam',
+            age: '33.000',
+        });
+    }
 });
 
 test('It should be able to handle array parameters;', t => {
