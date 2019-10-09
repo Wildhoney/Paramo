@@ -36,6 +36,7 @@
         "rollup-plugin-terser": "^5.1.2"
     },
     "dependencies": {
+        "date-fns": "^2.4.1",
         "query-string": "^6.8.3"
     }
 }

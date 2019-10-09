@@ -1,22 +1,23 @@
 export default {
-    toType: ({ booleanStrings }) => value => {
-        const type = (() => {
+    toType: ({ booleanStrings: [truthy, falsy] }) => value => {
+        const typedValue = (() => {
             switch (value) {
                 case '1':
                 case 'yes':
                 case 'true':
-                case booleanStrings[0]:
+                case truthy:
                     return true;
                 case '0':
                 case 'no':
                 case 'false':
-                case booleanStrings[1]:
+                case falsy:
                     return false;
             }
         })();
-        if (typeof type !== 'boolean') throw new Error('Invalid type.Bool');
-        return type;
+        if (typeof typedValue !== 'boolean')
+            throw new Error('Invalid type.Bool');
+        return typedValue;
     },
-    toString: ({ booleanStrings }) => value =>
-        value === true ? booleanStrings[0] : booleanStrings[1],
+    toString: ({ booleanStrings: [truthy, falsy] }) => value =>
+        value === true ? truthy : falsy,
 };

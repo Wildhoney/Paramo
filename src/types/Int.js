@@ -1,9 +1,8 @@
 export default {
     toType: () => value => {
-        const type = Number(value);
-        if (typeof type !== 'number' || Number.isNaN(type))
-            throw new Error('Invalid t.Int');
-        return type;
+        const typedValue = parseInt(value);
+        if (Number.isNaN(typedValue)) throw new Error('Invalid t.Int');
+        return typedValue;
     },
     toString: () => String,
 };

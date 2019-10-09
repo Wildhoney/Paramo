@@ -9,12 +9,23 @@ const types = {
 
 const options = {};
 
-test('It should be able to handle basic parameters;', t => {
+test.only('It should be able to handle basic parameters;', t => {
     const userParams = create(types, options);
     t.deepEqual(userParams.parse('name=Adam&age=33'), {
         name: 'Adam',
         age: 33,
     });
+
+    {
+        const userParams = create(
+            { ...types, birthDate: type.Date },
+            { ...options, dateFormat: 'YYYY-MM-DD' },
+        );
+        t.deepEqual(userParams.parse('name=Adam&birthDate=10-10-1985'), {
+            name: 'Adam',
+            birthDate: new Date('10-10-1985'),
+        });
+    }
 });
 
 test('It should be able to handle array parameters;', t => {

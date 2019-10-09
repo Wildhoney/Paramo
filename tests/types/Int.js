@@ -15,4 +15,10 @@ test('It should be able to sanitize int types;', t => {
 
     // Values that are not integer should be ignored.
     t.deepEqual(userParams.parse('name=Adam&age=n/a'), { name: 'Adam' });
+
+    // Floats should be cast without decimal places.
+    t.deepEqual(userParams.parse('name=Adam&age=33.8'), {
+        name: 'Adam',
+        age: 33,
+    });
 });
