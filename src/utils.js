@@ -3,8 +3,8 @@ import humps from 'humps';
 import { option } from './';
 
 function getDefaultParams() {
-    const locationAvailable = typeof global.location === 'undefined';
-    return locationAvailable ? global.location.search : null;
+    const isAvailable = typeof global.location !== 'undefined';
+    return isAvailable ? global.location.search : null;
 }
 
 function getType(type, options) {
