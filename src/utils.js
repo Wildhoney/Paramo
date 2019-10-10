@@ -1,38 +1,7 @@
 import qs from 'query-string';
 import humps from 'humps';
+import { equals } from 'ramda';
 import { option } from './';
-
-function getDefaultParams() {
-    const isAvailable = typeof global.location !== 'undefined';
-    return isAvailable ? global.location.search : null;
-}
-
-function getType(type, options) {
-    const [typer, defaultValue = null] = [].concat(type);
-    const toType = typer.toType(options);
-    const toString = typer.toString(options);
-
-    return { toType, toString, defaultValue };
-}
-
-function getKeyFormat(options) {
-    const isSet = Object.values(option.keyFormat).includes(options.keyFormat);
-    const separator = isSet ? options.keyFormat.description : null;
-
-    return !options.keyFormat
-        ? { camelize: a => a, decamelize: a => a, separator: null }
-        : {
-              camelize: a => humps.camelizeKeys(a, { separator }),
-              decamelize: a => humps.decamelizeKeys(a, { separator }),
-          };
-}
-
-function getArrayFormat(options) {
-    const isSet = Object.values(option.arrayFormat).includes(
-        options.arrayFormat,
-    );
-    return isSet ? options.arrayFormat.description : null;
-}
 
 export function parse(types, options) {
     const keyFormat = getKeyFormat(options);
@@ -96,7 +65,12 @@ export function stringify(types, options) {
 
             // Parse the type into its type, unless it is a null value in which case
             // we'll use the default value.
-            const { toString, defaultValue } = getType(type, options);
+            const { toString, defaultValue, isSame } = getType(type, options);
+
+            // Check whether we should be ignoring types that are the default values.
+            if (options.stripDefaults && isSame(defaultValue, value))
+                return model;
+
             const parsedValue =
                 value != null
                     ? toString(value)
@@ -119,4 +93,36 @@ export function stringify(types, options) {
                   arrayFormat,
               })}`;
     };
+}
+
+function getDefaultParams() {
+    const isAvailable = typeof global.location !== 'undefined';
+    return isAvailable ? global.location.search : null;
+}
+
+function getType(type, options) {
+    const [typer, defaultValue = null] = [].concat(type);
+    const toType = typer.toType(options);
+    const toString = typer.toString(options);
+
+    return { toType, toString, defaultValue, isSame: typer.isSame || equals };
+}
+
+function getKeyFormat(options) {
+    const isSet = Object.values(option.keyFormat).includes(options.keyFormat);
+    const separator = isSet ? options.keyFormat.description : null;
+
+    return !options.keyFormat
+        ? { camelize: a => a, decamelize: a => a, separator: null }
+        : {
+              camelize: a => humps.camelizeKeys(a, { separator }),
+              decamelize: a => humps.decamelizeKeys(a, { separator }),
+          };
+}
+
+function getArrayFormat(options) {
+    const isSet = Object.values(option.arrayFormat).includes(
+        options.arrayFormat,
+    );
+    return isSet ? options.arrayFormat.description : null;
 }

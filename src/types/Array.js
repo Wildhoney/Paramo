@@ -1,4 +1,6 @@
-export default type => ({
+import { equals } from 'ramda';
+
+const Type = type => ({
     toType: options => value => {
         if (
             !Array.isArray(value) &&
@@ -11,4 +13,13 @@ export default type => ({
     },
     toString: options => values =>
         values.map(value => type.toString(options)(value)),
+    isSame: (a, b) => equals([...a].sort(), [...b].sort()),
 });
+
+Type.Sequence = type => ({
+    toType: Type(type).toType,
+    toString: Type(type).toString,
+    isSame: equals,
+});
+
+export default Type;

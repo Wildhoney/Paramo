@@ -1,4 +1,4 @@
-const Float = {
+const Type = {
     toType: () => value => {
         const typedValue = parseFloat(value);
         if (Number.isNaN(typedValue)) throw new Error('Invalid t.Float');
@@ -7,12 +7,12 @@ const Float = {
     toString: () => String,
 };
 
-Float.DP = decimalPlaces => ({
+Type.DP = decimalPlaces => ({
     toType: () => value => {
-        const typedValue = Float.toType()(value);
+        const typedValue = Type.toType()(value);
         return typedValue.toFixed(decimalPlaces);
     },
-    toString: () => value => Float.toString()(value),
+    toString: () => value => Type.toString()(value),
 });
 
-export default Float;
+export default Type;

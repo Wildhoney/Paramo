@@ -6,6 +6,67 @@ const types = {
     countries: type.Array(type.String),
 };
 
+test('It should be able to handle skipping the defaults for arrays;', t => {
+    const userParams = create(
+        { ...types, countries: [type.Array(type.String), ['UK', 'RU']] },
+        { arrayFormat: option.arrayFormat.comma, stripDefaults: true },
+    );
+
+    t.is(
+        userParams.stringify({
+            name: 'Adam',
+            countries: ['UK', 'RU', 'ES'],
+        }),
+        '?name=Adam&countries=UK,RU,ES',
+    );
+    t.is(
+        userParams.stringify({
+            name: 'Adam',
+            countries: ['UK', 'RU'],
+        }),
+        '?name=Adam',
+    );
+    t.is(
+        userParams.stringify({
+            name: 'Adam',
+            countries: ['RU', 'UK'],
+        }),
+        '?name=Adam',
+    );
+
+    {
+        const userParams = create(
+            {
+                ...types,
+                countries: [type.Array.Sequence(type.String), ['UK', 'RU']],
+            },
+            { arrayFormat: option.arrayFormat.comma, stripDefaults: true },
+        );
+
+        t.is(
+            userParams.stringify({
+                name: 'Adam',
+                countries: ['UK', 'RU', 'ES'],
+            }),
+            '?name=Adam&countries=UK,RU,ES',
+        );
+        t.is(
+            userParams.stringify({
+                name: 'Adam',
+                countries: ['UK', 'RU'],
+            }),
+            '?name=Adam',
+        );
+        t.is(
+            userParams.stringify({
+                name: 'Adam',
+                countries: ['RU', 'UK'],
+            }),
+            '?name=Adam&countries=RU,UK',
+        );
+    }
+});
+
 test('It should be able to sanitize array types;', t => {
     const userParams = create(types, { arrayFormat: option.arrayFormat.comma });
 
