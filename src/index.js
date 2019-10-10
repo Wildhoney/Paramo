@@ -13,7 +13,7 @@ const defaultOptions = {
     stripDefaults: false,
     stripRedundant: false,
     booleanStrings: ['true', 'false'],
-    dateFormat: 'YYYY-MM-DD',
+    dateFormat: 'yyyy-mm-dd',
     keyFormat: null,
 };
 
