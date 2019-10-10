@@ -24,5 +24,5 @@ userParams.stringify({ name: 'Adam', age: 33 });
 | `booleanStrings`  | `['true', 'false']`                                                   | Tuple of custom boolean types: `['yup', 'nup']`.                                                          |
 | `arrayFormat`     | `null`                                                                | [https://github.com/sindresorhus/query-string](`query-string`) option for representing arrays as strings. |
 | `stripDefaults`   | `false`                                                               | Whether default values are stipped when stringifying.                                                     |
-| `dateFormat`      | `yyyy-mm-dd` [https://date-fns.org](`date-dns`) formatting for dates. |
+| `dateFormat`      | `yyyy-mm-dd` | [https://date-fns.org](`date-dns`) formatting for dates. |
 | `keyFormat`       | `null`                                                                | Applying snakecase and kebabcase to the parameters.                                                       |
