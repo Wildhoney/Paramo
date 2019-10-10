@@ -99,7 +99,7 @@ test('It should be able to handle boolean/custom boolean parameters;', t => {
     }
 });
 
-test.only('It should be able to handle the transforming of the keys in kebab case;', t => {
+test('It should be able to handle the transforming of the keys in kebab case;', t => {
     const userParams = create(
         { ...types, isDeveloper: type.Bool },
         { ...options, keyFormat: option.keyFormat.kebab },
@@ -110,7 +110,7 @@ test.only('It should be able to handle the transforming of the keys in kebab cas
 test('It should be able to handle the transforming of the keys in snake case;', t => {
     const userParams = create(
         { ...types, isDeveloper: type.Bool },
-        { ...options, keyFormat: option.transform.snake },
+        { ...options, keyFormat: option.keyFormat.snake },
     );
     t.is(userParams.stringify({ isDeveloper: true }), '?is_developer=true');
 });
