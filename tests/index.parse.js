@@ -1,5 +1,5 @@
 import test from 'ava';
-import { create, type } from '../src';
+import { create, type, option } from '../src';
 
 const types = {
     name: [type.String, 'Adam'],
@@ -44,7 +44,7 @@ test('It should be able to handle array parameters;', t => {
             age: type.Array(type.Int),
             isDeveloper: type.Array(type.Bool),
         },
-        { ...options, arrayFormat: 'comma' },
+        { ...options, arrayFormat: option.arrayFormat.comma },
     );
 
     t.deepEqual(
@@ -63,7 +63,7 @@ test('It should be able to handle tuple parameters;', t => {
             ...types,
             person: type.Tuple(type.String, type.Int, type.Bool),
         },
-        { ...options, arrayFormat: 'comma' },
+        { ...options, arrayFormat: option.arrayFormat.comma },
     );
 
     t.deepEqual(userParams.parse('person=Adam,33,true'), {
@@ -131,4 +131,24 @@ test('It should be able to include/exclude default parameters;', t => {
             location: 'UK',
         });
     }
+});
+
+test('It should be able to handle the transforming of the keys in kebab case;', t => {
+    const userParams = create(
+        { ...types, isDeveloper: type.Bool },
+        { ...options, keyFormat: option.keyFormat.kebab },
+    );
+    t.deepEqual(userParams.parse('is-developer=true'), {
+        isDeveloper: true,
+    });
+});
+
+test('It should be able to handle the transforming of the keys in snake case;', t => {
+    const userParams = create(
+        { ...types, isDeveloper: type.Bool },
+        { ...options, keyFormat: option.keyFormat.snake },
+    );
+    t.deepEqual(userParams.parse('is_developer=true'), {
+        isDeveloper: true,
+    });
 });

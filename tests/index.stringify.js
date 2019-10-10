@@ -1,5 +1,5 @@
 import test from 'ava';
-import { create, type } from '../src';
+import { create, type, option } from '../src';
 
 const types = {
     name: [type.String, 'Adam'],
@@ -36,7 +36,7 @@ test('It should be able to handle array parameters;', t => {
             age: type.Array(type.Int),
             isDeveloper: type.Array(type.Bool),
         },
-        { ...options, arrayFormat: 'comma' },
+        { ...options, arrayFormat: option.arrayFormat.comma },
     );
 
     t.is(
@@ -55,7 +55,7 @@ test('It should be able to handle tuple parameters;', t => {
             ...types,
             person: type.Tuple(type.String, type.Int, type.Bool),
         },
-        { ...options, arrayFormat: 'comma' },
+        { ...options, arrayFormat: option.arrayFormat.comma },
     );
 
     t.is(
@@ -97,4 +97,20 @@ test('It should be able to handle boolean/custom boolean parameters;', t => {
             '?name=Adam&age=33&isDeveloper=nup',
         );
     }
+});
+
+test.only('It should be able to handle the transforming of the keys in kebab case;', t => {
+    const userParams = create(
+        { ...types, isDeveloper: type.Bool },
+        { ...options, keyFormat: option.keyFormat.kebab },
+    );
+    t.is(userParams.stringify({ isDeveloper: true }), '?is-developer=true');
+});
+
+test('It should be able to handle the transforming of the keys in snake case;', t => {
+    const userParams = create(
+        { ...types, isDeveloper: type.Bool },
+        { ...options, keyFormat: option.transform.snake },
+    );
+    t.is(userParams.stringify({ isDeveloper: true }), '?is_developer=true');
 });

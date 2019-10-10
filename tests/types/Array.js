@@ -1,5 +1,5 @@
 import test from 'ava';
-import { create, type } from '../../src';
+import { create, type, option } from '../../src';
 
 const types = {
     name: type.String,
@@ -7,7 +7,7 @@ const types = {
 };
 
 test('It should be able to sanitize array types;', t => {
-    const userParams = create(types, { arrayFormat: 'comma' });
+    const userParams = create(types, { arrayFormat: option.arrayFormat.comma });
 
     t.deepEqual(userParams.parse('name=Adam&countries=UK,RU'), {
         name: 'Adam',
@@ -21,7 +21,9 @@ test('It should be able to sanitize array types;', t => {
 
     {
         // Values that are not arrays should be ignored.
-        const userParams = create(types, { arrayFormat: 'index' });
+        const userParams = create(types, {
+            arrayFormat: option.arrayFormat.index,
+        });
         t.deepEqual(userParams.parse('name=Adam&countries=UK,RU'), {
             name: 'Adam',
         });
@@ -31,7 +33,7 @@ test('It should be able to sanitize array types;', t => {
         // Values that contain invalid primitives should be ignored.
         const userParams = create(
             { ...types, countries: t.Int },
-            { arrayFormat: 'comma' },
+            { arrayFormat: option.arrayFormat.comma },
         );
         t.deepEqual(userParams.parse('name=Adam&countries=n/a'), {
             name: 'Adam',
@@ -40,7 +42,9 @@ test('It should be able to sanitize array types;', t => {
 });
 
 test('It should be able to handle bracket list types;', t => {
-    const userParams = create(types, { arrayFormat: 'bracket' });
+    const userParams = create(types, {
+        arrayFormat: option.arrayFormat.bracket,
+    });
     t.deepEqual(userParams.parse('name=Adam&countries[]=UK&countries[]=RU'), {
         name: 'Adam',
         countries: ['UK', 'RU'],
@@ -52,7 +56,7 @@ test('It should be able to handle bracket list types;', t => {
 });
 
 test('It should be able to handle index list types;', t => {
-    const userParams = create(types, { arrayFormat: 'index' });
+    const userParams = create(types, { arrayFormat: option.arrayFormat.index });
     t.deepEqual(userParams.parse('name=Adam&countries[0]=UK&countries[1]=RU'), {
         name: 'Adam',
         countries: ['UK', 'RU'],
@@ -64,7 +68,7 @@ test('It should be able to handle index list types;', t => {
 });
 
 test('It should be able to handle none list types;', t => {
-    const userParams = create(types, { arrayFormat: 'none' });
+    const userParams = create(types, { arrayFormat: option.arrayFormat.none });
     t.deepEqual(userParams.parse('name=Adam&countries=UK&countries=RU'), {
         name: 'Adam',
         countries: ['UK', 'RU'],

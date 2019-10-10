@@ -1,4 +1,6 @@
 import qs from 'query-string';
+import humps from 'humps';
+import { option } from './';
 
 function getDefaultParams() {
     const locationAvailable = typeof global.location === 'undefined';
@@ -13,9 +15,33 @@ function getType(type, options) {
     return { toType, toString, defaultValue };
 }
 
-export function parse(types, { arrayFormat, ...options }) {
+function getKeyFormat(options) {
+    const isSet = Object.values(option.keyFormat).includes(options.keyFormat);
+    const separator = isSet ? options.keyFormat.description : null;
+
+    return !options.keyFormat
+        ? { camelize: a => a, decamelize: a => a, separator: null }
+        : {
+              camelize: a => humps.camelizeKeys(a, { separator }),
+              decamelize: a => humps.decamelizeKeys(a, { separator }),
+          };
+}
+
+function getArrayFormat(options) {
+    const isSet = Object.values(option.arrayFormat).includes(
+        options.arrayFormat,
+    );
+    return isSet ? options.arrayFormat.description : null;
+}
+
+export function parse(types, options) {
+    const keyFormat = getKeyFormat(options);
+    const arrayFormat = getArrayFormat(options);
+
     return (params = getDefaultParams()) => {
-        const parsedParams = qs.parse(params, { arrayFormat });
+        const parsedParams = keyFormat.camelize(
+            qs.parse(params, { arrayFormat }),
+        );
 
         // Including defaults should take from both the types and the parameters.
         const keys = options.includeDefaults
@@ -48,7 +74,10 @@ export function parse(types, { arrayFormat, ...options }) {
     };
 }
 
-export function stringify(types, { arrayFormat, ...options }) {
+export function stringify(types, options) {
+    const keyFormat = getKeyFormat(options);
+    const arrayFormat = getArrayFormat(options);
+
     return params => {
         const keys = options.includeDefaults
             ? Object.keys({ ...params, ...types })
@@ -75,8 +104,12 @@ export function stringify(types, { arrayFormat, ...options }) {
         }, {});
 
         const isEmpty = Object.keys(parsedParams).length === 0;
+
         return isEmpty
             ? ''
-            : `?${qs.stringify(parsedParams, { sort: false, arrayFormat })}`;
+            : `?${qs.stringify(keyFormat.decamelize(parsedParams), {
+                  sort: false,
+                  arrayFormat,
+              })}`;
     };
 }
