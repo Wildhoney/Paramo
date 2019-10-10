@@ -1,5 +1,4 @@
 import * as utils from './utils';
-import * as t from './types';
 
 export function create(types, options = defaultOptions) {
     return {
@@ -30,13 +29,4 @@ export const option = {
     },
 };
 
-export const type = {
-    String: t.String,
-    Int: t.Int,
-    BigInt: t.BigInt,
-    Float: t.Float,
-    Bool: t.Bool,
-    Date: t.Date,
-    Array: t.Array,
-    Tuple: t.Tuple,
-};
+export * as type from './types';

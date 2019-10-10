@@ -1,4 +1,7 @@
 {
-    "plugins": ["@babel/plugin-proposal-private-methods"],
-    "presets": ["@babel/preset-env"]
+    "presets": ["@babel/preset-env"],
+    "plugins": [
+        "@babel/plugin-proposal-private-methods",
+        "@babel/plugin-proposal-export-namespace-from"
+    ]
 }

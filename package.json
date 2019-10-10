@@ -14,6 +14,7 @@
         "format": "prettier --write '**/**.{js,html,md}'"
     },
     "devDependencies": {
+        "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
         "@babel/plugin-proposal-private-methods": "^7.6.0",
         "@babel/polyfill": "^7.6.0",
         "@babel/preset-env": "^7.6.3",
