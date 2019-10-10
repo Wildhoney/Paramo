@@ -1,5 +1,9 @@
 import * as utils from './utils';
 
+// @TODO:
+// - Test ignore defaults when using lists.
+// - Allow list to ignore order when comparing defaults.
+
 export function create(types, options = defaultOptions) {
     return {
         parse: utils.parse(types, { ...defaultOptions, ...options }),
@@ -10,7 +14,7 @@ export function create(types, options = defaultOptions) {
 const defaultOptions = {
     arrayFormat: null,
     includeDefaults: false,
-    stripRedundant: true,
+    stripRedundant: false,
     booleanStrings: ['true', 'false'],
     dateFormat: 'YYYY-MM-DD',
     keyFormat: null,

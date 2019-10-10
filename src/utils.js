@@ -87,6 +87,13 @@ export function stringify(types, options) {
             const type = types[key];
             const value = params[key];
 
+            if (!type)
+                // Determine whether to include redundant types, as the current value
+                // has not been found
+                return options.stripRedundant
+                    ? model
+                    : { ...model, [key]: value };
+
             // Parse the type into its type, unless it is a null value in which case
             // we'll use the default value.
             const { toString, defaultValue } = getType(type, options);

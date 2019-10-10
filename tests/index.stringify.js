@@ -114,3 +114,19 @@ test('It should be able to handle the transforming of the keys in snake case;', 
     );
     t.is(userParams.stringify({ isDeveloper: true }), '?is_developer=true');
 });
+
+test('It should be able to handle values that are not represented in the types;', t => {
+    const userParams = create(types, options);
+    t.is(
+        userParams.stringify({ name: 'Adam', country: 'UK' }),
+        '?name=Adam&country=UK',
+    );
+
+    {
+        const userParams = create(types, { ...options, stripRedundant: true });
+        t.is(
+            userParams.stringify({ name: 'Adam', country: 'UK' }),
+            '?name=Adam',
+        );
+    }
+});

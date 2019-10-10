@@ -32,7 +32,7 @@ test('It should be able to sanitize array types;', t => {
     {
         // Values that contain invalid primitives should be ignored.
         const userParams = create(
-            { ...types, countries: t.Int },
+            { ...types, countries: type.Array(type.Int) },
             { arrayFormat: option.arrayFormat.comma },
         );
         t.deepEqual(userParams.parse('name=Adam&countries=n/a'), {
