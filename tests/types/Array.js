@@ -16,6 +16,18 @@ test('It should be able to handle comma separated arrays;', t => {
     t.is(stringified, '?countries=UK,RU&name=Adam');
 });
 
+test('It should be able to omit the array item if it is empty;', t => {
+    const instance = create(types, {
+        arrayFormat: option.arrayFormat.comma,
+    });
+    const stringified = instance.stringify({ name: 'Adam', countries: [] });
+    t.is(stringified, '?name=Adam');
+    {
+        const stringified = instance.stringify({ countries: [] });
+        t.is(stringified, '');
+    }
+});
+
 test('It should be able to handle comma separated arrays with a single value;', t => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.comma,

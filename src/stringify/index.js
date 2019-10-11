@@ -1,4 +1,5 @@
 import qs from 'query-string';
+import { isEmpty } from 'ramda';
 import * as utils from '../utils';
 
 export default function stringify(types, options) {
@@ -26,15 +27,13 @@ export default function stringify(types, options) {
 
             const parsedValue = value != null ? toString(value) : options.includeDefaults ? defaultValue : null;
 
-            // Omit null values in the links.
-            if (value === null || parsedValue == null) return model;
+            // Omit null and empty values in the links.
+            if (value === null || parsedValue == null || isEmpty(parsedValue)) return model;
 
             return { ...model, [key]: parsedValue };
         }, {});
 
-        const isEmpty = Object.keys(parsedParams).length === 0;
-
-        return isEmpty
+        return isEmpty(parsedParams)
             ? ''
             : `?${qs.stringify(keyFormat.decamelize(parsedParams), {
                   sort: false,
