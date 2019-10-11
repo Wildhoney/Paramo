@@ -16,6 +16,14 @@ test('It should be able to parse the parameters from a simple URL string;', t =>
     });
 });
 
+test("It should be able to re-throw the error if it isn't related to types;", t => {
+    const types = {
+        name: () => {},
+    };
+    const instance = create(types);
+    t.throws(() => instance.parse('name=Adam'), 'typer.toType is not a function');
+});
+
 test('It should be able to handle the inclusion of the default parameters;', t => {
     const types = {
         name: type.String,
