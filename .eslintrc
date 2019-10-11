@@ -1,8 +1,9 @@
 {
     "parser": "babel-eslint",
-    "extends": ["standard", "prettier", "prettier/standard"],
+    "extends": ["standard", "prettier", "prettier/standard", "plugin:ava/recommended"],
     "rules": {},
     "globals": {
         "BigInt": true
-    }
+    },
+    "plugins": ["ava"]
 }

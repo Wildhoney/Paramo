@@ -10,8 +10,18 @@
         "build": "rollup -c",
         "test": "yarn lint && yarn spec",
         "spec": "ava",
+        "coverage": "nyc ava && nyc report --reporter=text-lcov | coveralls",
         "lint": "eslint '**/**.js'",
         "format": "prettier --write '**/**.{js,html,md}'"
+    },
+    "nyc": {
+        "all": true,
+        "include": [
+            "src/**/*.js"
+        ],
+        "exclude": [
+            "tests/**/*.js"
+        ]
     },
     "devDependencies": {
         "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
@@ -22,13 +32,16 @@
         "@babel/register": "^7.6.2",
         "ava": "^2.4.0",
         "babel-eslint": "^10.0.3",
+        "coveralls": "^3.0.7",
         "eslint": "^6.5.1",
         "eslint-config-prettier": "^6.4.0",
         "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-ava": "^9.0.0",
         "eslint-plugin-import": "^2.18.2",
         "eslint-plugin-node": "^10.0.0",
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-standard": "^4.0.1",
+        "nyc": "^14.1.1",
         "prettier": "^1.18.2",
         "rollup": "^1.23.1",
         "rollup-plugin-babel": "^4.3.3",
