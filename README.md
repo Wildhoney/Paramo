@@ -2,20 +2,95 @@
 
 > Swiss-army knife of stringifying, parsing and manipulating URL parameters by applying types to the parameters.
 
+![Travis](http://img.shields.io/travis/Wildhoney/Paramo.svg?style=for-the-badge)
+&nbsp;
+![npm](http://img.shields.io/npm/v/paramo.svg?style=for-the-badge)
+&nbsp;
+![License MIT](http://img.shields.io/badge/license-mit-lightgrey.svg?style=for-the-badge)
+&nbsp;
+![Coveralls](https://img.shields.io/coveralls/Wildhoney/Paramo.svg?style=for-the-badge)
+&nbsp;
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge)](https://github.com/prettier/prettier)
+
+**npm**: `npm install paramo`
+
+**yarn**: `yarn add paramo`
+
+---
+
+## Getting Started
+
+`Paramo` takes the very useful [https://github.com/sindresorhus/query-string](`query-string`) library and applies the concept of types as an added layer. Although `query-string` provides some typecasting of values, it's far from ideal. Using the example below we can setup a type system to transform URL parameters back and forth between string representations.
+
 ```javascript
 import { create, type } from 'paramo';
 
 const types = {
-    name: [type.String, 'Adam'],
-    age: [type.Int, 33],
+    name: type.String,
+    age: type.Int,
 };
 
-const userParams = create(types, options);
-userParams.parse('name=Adam&age=33');
-userParams.stringify({ name: 'Adam', age: 33 });
+const user = create(types);
+
+// { name: 'Adam', age: 34 }
+user.parse('name=Adam&age=34');
+
+// name=Adam&age=34
+user.stringify({ name: 'Adam', age: 34 });
 ```
 
-## Options
+The `String` and `Int` types are probably the most simple types. Using the `Bool` type takes a little more configuration if the default isn't sufficient, as booleans can be represented as strings in many various ways. With that in mind, you can provide a second argument to the `create` function which overrides the defaults &ndash; in our case to modify the string representations of boolean values to be the pirate-esque `yar` and `naw`.
+
+```javascript
+import { create, type } from 'paramo';
+
+const types = {
+    name: type.String,
+    age: type.Int,
+    isDeveloper: type.Bool,
+};
+
+const user = create(types, {
+    booleanStrings: ['yar', 'naw'],
+});
+
+// { name: 'Adam', age, 34: isDeveloper: true }
+user.parse('name=Adam&age=34&isDeveloper=yar');
+
+// name=Adam&age=34&isDeveloper=yar
+user.stringify({ name: 'Adam', age: 34, isDeveloper: true });
+```
+
+We can then introduce the concept of arrays which uses [the `query-string` API](https://github.com/sindresorhus/query-string#api) for specifying how lists are represented &ndash; by default as duplicate keys.
+
+```javascript
+import { create, type, option } from 'paramo';
+
+const types = {
+    name: type.String,
+    age: type.Int,
+    isDeveloper: type.Bool,
+    programmingLanguages: type.Array(type.String),
+};
+
+const user = create(types, {
+    booleanStrings: ['yar', 'naw'],
+    arrayFormat: option.arrayFormat.comma,
+});
+
+// { name: 'Adam', age, 34: isDeveloper: true, programmingLanguages: ['JavaScript', 'Ruby', 'Haskell'] }
+user.parse('name=Adam&age=34&isDeveloper=yar&programmingLanguages=JavaScript,Ruby,Haskell');
+
+// name=Adam&age=34&isDeveloper=yar&programmingLanguages=JavaScript,Ruby,Haskell
+user.stringify({
+    name: 'Adam',
+    age: 34,
+    isDeveloper: true,
+    programmingLanguages: ['Javascript', 'Ruby', 'Haskell'],
+});
+```
+
+## Configurable Options
 
 | Option            | Default             | Description                                                                                               |
 | ----------------- | ------------------- | --------------------------------------------------------------------------------------------------------- |
