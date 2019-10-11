@@ -99,5 +99,5 @@ user.stringify({
 | `booleanStrings`  | `['true', 'false']` | Tuple of custom boolean types: `['yup', 'nup']`.                                                          |
 | `arrayFormat`     | `null`              | [https://github.com/sindresorhus/query-string](`query-string`) option for representing arrays as strings. |
 | `stripDefaults`   | `false`             | Whether default values are stipped when stringifying.                                                     |
-| `dateFormat`      | `yyyy-mm-dd`        | [https://date-fns.org](`date-dns`) formatting for dates.                                                  |
+| `dateFormat`      | `YYYY-MM-DD`        | [https://momentjs.com/docs/](`moment`) formatting for dates.                                              |
 | `keyFormat`       | `null`              | Applying snakecase and kebabcase to the parameters.                                                       |
