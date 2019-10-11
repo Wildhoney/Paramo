@@ -6,3 +6,4 @@ export { default as Bool } from './Bool';
 export { default as Date } from './Date';
 export { default as Array } from './Array';
 export { default as Tuple } from './Tuple';
+export { default as JSON } from './JSON';
