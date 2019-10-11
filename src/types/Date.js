@@ -1,11 +1,29 @@
-import * as date from 'date-fns';
+import moment from 'moment';
+import { TypeError } from '../utils';
 
-export default {
+const Type = {
     toType: () => value => {
-        const typedValue = new Date(Date.parse(value));
-        if (Number.isNaN(typedValue.getTime()))
-            throw new Error('Invalid t.Date');
+        const typedValue = moment.isMoment(value) ? value.toDate() : moment(value).toDate();
+        if (Number.isNaN(typedValue.getTime())) throw new TypeError('Invalid t.Date');
         return typedValue;
     },
-    toString: ({ dateFormat }) => value => date.format(value, dateFormat),
+    toString: ({ dateFormat }) => value => moment(value).format(dateFormat),
 };
+
+Type.UnixSeconds = {
+    toType: () => value => {
+        const typedValue = moment(Number(value));
+        return Type.toType()(typedValue);
+    },
+    toString: Type.toString,
+};
+
+Type.UnixMilliseconds = {
+    toType: () => value => {
+        const typedValue = moment.unix(Number(value));
+        return Type.toType()(typedValue);
+    },
+    toString: Type.toString,
+};
+
+export default Type;

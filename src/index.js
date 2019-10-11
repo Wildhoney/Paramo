@@ -1,9 +1,10 @@
-import * as utils from './utils';
+import parse from './parse';
+import stringify from './stringify';
 
 export function create(types, options = defaultOptions) {
     return {
-        parse: utils.parse(types, { ...defaultOptions, ...options }),
-        stringify: utils.stringify(types, { ...defaultOptions, ...options }),
+        parse: parse(types, { ...defaultOptions, ...options }),
+        stringify: stringify(types, { ...defaultOptions, ...options }),
     };
 }
 
@@ -13,7 +14,7 @@ const defaultOptions = {
     stripDefaults: false,
     stripRedundant: false,
     booleanStrings: ['true', 'false'],
-    dateFormat: 'yyyy-mm-dd',
+    dateFormat: 'YYYY-MM-DD',
     keyFormat: null,
 };
 

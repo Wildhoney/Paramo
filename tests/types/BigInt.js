@@ -6,14 +6,20 @@ const types = {
     age: type.BigInt,
 };
 
-test('It should be able to sanitize int types;', t => {
-    const userParams = create(types, {});
-    t.deepEqual(userParams.parse('name=Adam&age=33'), {
-        name: 'Adam',
-        age: BigInt(33),
-    });
+test('It should be able to handle BigInt types;', t => {
+    const instance = create(types);
+    const parsed = instance.parse('name=Adam&age=34');
+    t.deepEqual(parsed, { name: 'Adam', age: 34n });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?age=34&name=Adam');
+});
 
-    // Values that are not integer should be ignored.
-    t.deepEqual(userParams.parse('name=Adam&age=n/a'), { name: 'Adam' });
-    t.deepEqual(userParams.parse('name=Adam&age=33.8'), { name: 'Adam' });
+test('It should be able to sanitize BigInts when the value is invalid;', t => {
+    const instance = create(types);
+    const parsed = instance.parse('name=Adam&age=ThirtyFour');
+    t.deepEqual(parsed, { name: 'Adam' });
+    {
+        const parsed = instance.parse('name=Adam&age=34.1');
+        t.deepEqual(parsed, { name: 'Adam' });
+    }
 });

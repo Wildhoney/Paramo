@@ -1,4 +1,5 @@
 import test from 'ava';
+import moment from 'moment';
 import { create, type } from '../../src';
 
 const types = {
@@ -6,13 +7,35 @@ const types = {
     birthDate: type.Date,
 };
 
-test('It should be able to sanitize date types;', t => {
-    const userParams = create(types, {});
-    t.deepEqual(userParams.parse('name=Adam&birthDate=10-10-1985'), {
-        name: 'Adam',
-        birthDate: new Date('10-10-1985'),
-    });
+test.beforeEach(() => (moment.suppressDeprecationWarnings = true));
+test.afterEach(() => (moment.suppressDeprecationWarnings = true));
 
-    // Values that are not date should be ignored.
-    t.deepEqual(userParams.parse('name=Adam&birthDate=n/a'), { name: 'Adam' });
+test('It should be able to handle Date types;', t => {
+    const instance = create(types, { dateFormat: 'YYYY-MM-DD' });
+    const parsed = instance.parse('name=Adam&birthDate=1985-10-10');
+    t.deepEqual(parsed, { name: 'Adam', birthDate: moment('1985-10-10').toDate() });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?birthDate=1985-10-10&name=Adam');
+});
+
+test('It should be able to handle Unix S Date types;', t => {
+    const instance = create({ ...types, birthDate: type.Date.UnixSeconds }, { dateFormat: 'YYYY-MM-DD' });
+    const parsed = instance.parse('name=Adam&birthDate=497746800000');
+    t.deepEqual(parsed, { name: 'Adam', birthDate: moment('1985-10-10').toDate() });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?birthDate=1985-10-10&name=Adam');
+});
+
+test('It should be able to handle Unix MS Date types;', t => {
+    const instance = create({ ...types, birthDate: type.Date.UnixMilliseconds }, { dateFormat: 'YYYY-MM-DD' });
+    const parsed = instance.parse('name=Adam&birthDate=497746800');
+    t.deepEqual(parsed, { name: 'Adam', birthDate: moment('1985-10-10').toDate() });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?birthDate=1985-10-10&name=Adam');
+});
+
+test('It should be able to sanitize Dates when the value is invalid;', t => {
+    const instance = create(types);
+    const parsed = instance.parse('name=Adam&birthDate=10th Oct 1985');
+    t.deepEqual(parsed, { name: 'Adam' });
 });

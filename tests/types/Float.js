@@ -6,24 +6,24 @@ const types = {
     age: type.Float,
 };
 
-test('It should be able to sanitize float types;', t => {
-    const userParams = create(types, {});
-    t.deepEqual(userParams.parse('name=Adam&age=33.8'), {
-        name: 'Adam',
-        age: 33.8,
-    });
-
-    // Values that are not float should be ignored.
-    t.deepEqual(userParams.parse('name=Adam&age=n/a'), { name: 'Adam' });
+test('It should be able to handle Float types;', t => {
+    const instance = create(types);
+    const parsed = instance.parse('name=Adam&age=34.1');
+    t.deepEqual(parsed, { name: 'Adam', age: 34.1 });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?age=34.1&name=Adam');
 });
 
-test.only('It should be able to sanitize float types with decimal places;', t => {
-    const userParams = create({ ...types, age: type.Float.DP(2) }, {});
-    t.deepEqual(userParams.parse('name=Adam&age=33.8'), {
-        name: 'Adam',
-        age: '33.80',
-    });
+test('It should be able to handle Float types with decimal places;', t => {
+    const instance = create({ ...types, age: type.Float.DP(3) });
+    const parsed = instance.parse('name=Adam&age=34.100');
+    t.deepEqual(parsed, { name: 'Adam', age: '34.100' });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?age=34.100&name=Adam');
+});
 
-    // Values that are not float should be ignored.
-    t.deepEqual(userParams.parse('name=Adam&age=n/a'), { name: 'Adam' });
+test('It should be able to sanitize BigInts when the value is invalid;', t => {
+    const instance = create(types);
+    const parsed = instance.parse('name=Adam&age=ThirtyFourPointOne');
+    t.deepEqual(parsed, { name: 'Adam' });
 });

@@ -3,29 +3,22 @@ import { create, type, option } from '../../src';
 
 const types = {
     name: type.String,
-    languages: type.Array(type.String),
+    profile: [type.Tuple(type.String, type.Int, type.Bool), ['Software Developer', 34, true]],
 };
 
-test('It should be able to sanitize tuple types;', t => {
-    const userParams = create(types, { arrayFormat: option.arrayFormat.comma });
-    t.deepEqual(
-        userParams.parse('name=Adam&languages=English,Russian,Spanish'),
-        {
-            name: 'Adam',
-            languages: ['English', 'Russian', 'Spanish'],
-        },
-    );
+test('It should be able to handle comma separated tuples;', t => {
+    const instance = create(types, {
+        arrayFormat: option.arrayFormat.comma,
+        booleanStrings: ['yar', 'naw'],
+    });
+    const parsed = instance.parse('name=Adam&profile=Software%20Developer,34,yar');
+    t.deepEqual(parsed, { name: 'Adam', profile: ['Software Developer', 34, true] });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?name=Adam&profile=Software%20Developer,34,yar');
+});
 
-    {
-        // Values that are not tuples should be ignored.
-        const userParams = create(types, {
-            arrayFormat: option.arrayFormat.index,
-        });
-        t.deepEqual(
-            userParams.parse('name=Adam&languages=English,Russian,Spanish'),
-            {
-                name: 'Adam',
-            },
-        );
-    }
+test('It should be able to sanitize tuples when its values are invalid;', t => {
+    const instance = create(types, { arrayFormat: option.arrayFormat.comma });
+    const parsed = instance.parse('name=Adam&profile=Software Developer,ThirtyFour,True');
+    t.deepEqual(parsed, { name: 'Adam' });
 });

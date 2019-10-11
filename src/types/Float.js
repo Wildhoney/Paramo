@@ -1,7 +1,9 @@
+import { TypeError } from '../utils';
+
 const Type = {
     toType: () => value => {
         const typedValue = parseFloat(value);
-        if (Number.isNaN(typedValue)) throw new Error('Invalid t.Float');
+        if (Number.isNaN(typedValue)) throw new TypeError('Invalid t.Float');
         return typedValue;
     },
     toString: () => String,
