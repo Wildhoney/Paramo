@@ -24,4 +24,6 @@ test('It should be able to sanitize Ints when the value is invalid;', t => {
     const instance = create(types);
     const parsed = instance.parse('name=Adam&age=ThirtyFour');
     t.deepEqual(parsed, { name: 'Adam' });
+    t.is(instance.stringify({ name: 'Adam', age: 'ThirtyFour' }), '?name=Adam');
+    t.is(instance.stringify({ name: 'Adam', age: 34.1 }), '?name=Adam');
 });

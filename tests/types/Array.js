@@ -105,4 +105,5 @@ test('It should be able to sanitize arrays when its values are invalid;', t => {
     const instance = create({ ...types, countries: type.Array(type.Int) }, { arrayFormat: option.arrayFormat.comma });
     const parsed = instance.parse('name=Adam&countries=UK,RU');
     t.deepEqual(parsed, { name: 'Adam' });
+    t.is(instance.stringify({ name: 'Adam', countries: 'UK' }), '?name=Adam');
 });

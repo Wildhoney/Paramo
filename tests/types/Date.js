@@ -38,4 +38,5 @@ test('It should be able to sanitize Dates when the value is invalid;', t => {
     const instance = create(types);
     const parsed = instance.parse('name=Adam&birthDate=10th Oct 1985');
     t.deepEqual(parsed, { name: 'Adam' });
+    t.is(instance.stringify({ name: 'Adam', birthDate: '10th Oct 1985' }), '?name=Adam');
 });

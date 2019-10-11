@@ -7,7 +7,10 @@ const Type = {
         if (Number.isNaN(typedValue.getTime())) throw new TypeError('Invalid t.Date');
         return typedValue;
     },
-    toString: ({ dateFormat }) => value => moment(value).format(dateFormat),
+    toString: ({ dateFormat }) => value => {
+        if (!(value instanceof Date)) throw new TypeError('Invalid t.Date');
+        return moment(value).format(dateFormat);
+    },
 };
 
 Type.UnixSeconds = {

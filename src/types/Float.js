@@ -6,7 +6,10 @@ const Type = {
         if (Number.isNaN(typedValue)) throw new TypeError('Invalid t.Float');
         return typedValue;
     },
-    toString: () => String,
+    toString: () => value => {
+        if (typeof value !== 'number' || Number.isInteger(value)) throw new TypeError('Invalid t.Float');
+        return String(value);
+    },
 };
 
 Type.DP = decimalPlaces => ({
@@ -14,7 +17,7 @@ Type.DP = decimalPlaces => ({
         const typedValue = Type.toType()(value);
         return typedValue.toFixed(decimalPlaces);
     },
-    toString: () => value => Type.toString()(value),
+    toString: () => String,
 });
 
 export default Type;

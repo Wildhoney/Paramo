@@ -18,8 +18,11 @@ export default {
                     return false;
             }
         })();
-        if (typeof typedValue !== 'boolean') throw new TypeError('Invalid type.Bool');
+        if (typeof typedValue !== 'boolean') throw new TypeError('Invalid t.Bool');
         return typedValue;
     },
-    toString: ({ booleanStrings: [truthy, falsy] }) => value => (value === true ? truthy : falsy),
+    toString: ({ booleanStrings: [truthy, falsy] }) => value => {
+        if (typeof value !== 'boolean') throw new TypeError('Invalid t.Bool');
+        return value === true ? truthy : falsy;
+    },
 };

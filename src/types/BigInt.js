@@ -8,5 +8,8 @@ export default {
             throw new TypeError('Invalid t.BigInt');
         }
     },
-    toString: () => String,
+    toString: () => value => {
+        if (!(Object(value) instanceof BigInt)) throw new TypeError('Invalid t.BigInt');
+        return String(value);
+    },
 };

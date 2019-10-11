@@ -26,4 +26,6 @@ test('It should be able to sanitize BigInts when the value is invalid;', t => {
     const instance = create(types);
     const parsed = instance.parse('name=Adam&age=ThirtyFourPointOne');
     t.deepEqual(parsed, { name: 'Adam' });
+    t.is(instance.stringify({ name: 'Adam', age: 'ThirtyFourPointOne' }), '?name=Adam');
+    t.is(instance.stringify({ name: 'Adam', age: 34 }), '?name=Adam');
 });

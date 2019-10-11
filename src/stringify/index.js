@@ -25,12 +25,20 @@ export default function stringify(types, options) {
             // Check whether we should be ignoring types that are the default values.
             if (options.stripDefaults && isSame(defaultValue, value)) return model;
 
-            const parsedValue = value != null ? toString(value) : options.includeDefaults ? defaultValue : null;
+            try {
+                const parsedValue = value != null ? toString(value) : options.includeDefaults ? defaultValue : null;
 
-            // Omit null and empty values in the links.
-            if (value === null || parsedValue == null || isEmpty(parsedValue)) return model;
+                // Omit null and empty values in the links.
+                if (value === null || parsedValue == null || isEmpty(parsedValue)) return model;
 
-            return { ...model, [key]: parsedValue };
+                return { ...model, [key]: parsedValue };
+            } catch (error) {
+                if (error instanceof utils.TypeError)
+                    return options.includeDefaults && defaultValue && !isEmpty(defaultValue)
+                        ? { ...model, [key]: defaultValue }
+                        : { ...model };
+                throw error;
+            }
         }, {});
 
         return isEmpty(parsedParams)

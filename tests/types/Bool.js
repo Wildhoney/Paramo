@@ -26,4 +26,5 @@ test('It should be able to sanitize Bools when the value is invalid;', t => {
     const instance = create(types);
     const parsed = instance.parse('name=Adam&isDeveloper=yup');
     t.deepEqual(parsed, { name: 'Adam' });
+    t.is(instance.stringify({ name: 'Adam', isDeveloper: 'True' }), '?name=Adam');
 });

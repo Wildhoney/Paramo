@@ -8,5 +8,8 @@ export default (...types) => ({
         const values = Array.isArray(value) ? value : [].concat(value);
         return values.map((value, index) => types[index].toType(options)(value));
     },
-    toString: options => values => values.map((value, index) => types[index].toString(options)(value)),
+    toString: options => values => {
+        if (!Array.isArray(values)) throw new TypeError('Invalid t.Tuple');
+        return values.map((value, index) => types[index].toString(options)(value));
+    },
 });

@@ -9,7 +9,10 @@ const Type = type => ({
         const values = Array.isArray(value) ? value : [].concat(value);
         return values.map(value => type.toType(options)(value));
     },
-    toString: options => values => values.map(value => type.toString(options)(value)),
+    toString: options => values => {
+        if (!Array.isArray(values)) throw new TypeError('Invalid t.Array');
+        return values.map(value => type.toString(options)(value));
+    },
     isSame: (a, b) => equals([...a].sort(), [...b].sort()),
 });
 

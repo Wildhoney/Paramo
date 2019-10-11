@@ -21,4 +21,5 @@ test('It should be able to sanitize tuples when its values are invalid;', t => {
     const instance = create(types, { arrayFormat: option.arrayFormat.comma });
     const parsed = instance.parse('name=Adam&profile=Software Developer,ThirtyFour,True');
     t.deepEqual(parsed, { name: 'Adam' });
+    t.is(instance.stringify({ name: 'Adam', profile: ['Software Developer', 'ThirtyFour', 'True'] }), '?name=Adam');
 });
