@@ -16,6 +16,7 @@
     "devDependencies": {
         "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
         "@babel/plugin-proposal-private-methods": "^7.6.0",
+        "@babel/plugin-syntax-bigint": "^7.4.4",
         "@babel/polyfill": "^7.6.0",
         "@babel/preset-env": "^7.6.3",
         "@babel/register": "^7.6.2",
@@ -36,8 +37,8 @@
         "rollup-plugin-terser": "^5.1.2"
     },
     "dependencies": {
-        "date-fns": "^2.4.1",
         "humps": "^2.0.1",
+        "moment": "^2.24.0",
         "query-string": "^6.8.3",
         "ramda": "^0.26.1"
     }
