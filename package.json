@@ -1,6 +1,6 @@
 {
     "name": "paramo",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Standard URLSearchParams with transformations to and from JavaScript types.",
     "main": "dist/index.js",
     "repository": "git@github.com:Wildhoney/Paramo.git",
