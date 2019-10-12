@@ -34,9 +34,14 @@ export default function stringify(types, options) {
                 return { ...model, [key]: parsedValue };
             } catch (error) {
                 if (error instanceof utils.TypeError)
-                    return options.includeDefaults && defaultValue && !isEmpty(defaultValue)
-                        ? { ...model, [key]: toString(defaultValue) }
-                        : { ...model };
+                    try {
+                        return options.includeDefaults && defaultValue && !isEmpty(defaultValue)
+                            ? { ...model, [key]: toString(defaultValue) }
+                            : model;
+                    } catch (error) {
+                        if (error instanceof utils.TypeError) return model;
+                        throw error;
+                    }
                 throw error;
             }
         }, {});
