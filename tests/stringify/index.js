@@ -161,3 +161,16 @@ test('It should be able to handle URL parameters in a different format;', t => {
         );
     }
 });
+
+test('It should be able to return the typed default value if the value is invalid;', t => {
+    const types = {
+        name: type.String,
+        age: [type.Int, 34],
+        isDeveloper: [type.Bool, true],
+    };
+    const instance = create(types, { includeDefaults: true, booleanStrings: ['yup', 'nup'] });
+    t.is(
+        instance.stringify({ name: 'Adam', age: 'ThirtyFour', isDeveloper: 'yes' }),
+        '?name=Adam&age=34&isDeveloper=yup',
+    );
+});
