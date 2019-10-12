@@ -31,4 +31,6 @@ export const option = {
     },
 };
 
+export { default as Type } from './types/Custom';
+
 export * as type from './types';
