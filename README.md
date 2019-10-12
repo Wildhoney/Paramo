@@ -20,7 +20,7 @@
 
 ## Getting Started
 
-`Paramo` takes the very useful [https://github.com/sindresorhus/query-string](`query-string`) library and applies the concept of types as an added layer. Although `query-string` provides some typecasting of values, it's far from ideal. Using the example below we can setup a type system to transform URL parameters back and forth between string representations.
+`Paramo` takes the very useful [query-string]() library and applies the concept of types as an added layer. Although `query-string` provides some typecasting of values, it's far from ideal. Using the example below we can setup a type system to transform URL parameters back and forth between string representations.
 
 ```javascript
 import { create, type } from 'paramo';
@@ -97,7 +97,7 @@ user.stringify({
 | `includeDefaults` | `true`              | Include default parameters set in the types.                                                              |
 | `stripRedundant`  | `false`             | Exclude parameters which are not included in the types.                                                   |
 | `booleanStrings`  | `['true', 'false']` | Tuple of custom boolean types: `['yup', 'nup']`.                                                          |
-| `arrayFormat`     | `null`              | [https://github.com/sindresorhus/query-string](`query-string`) option for representing arrays as strings. |
+| `arrayFormat`     | `null`              | [`query-string`](https://github.com/sindresorhus/query-string) option for representing arrays as strings. |
 | `stripDefaults`   | `false`             | Whether default values are stipped when stringifying.                                                     |
-| `dateFormat`      | `YYYY-MM-DD`        | [https://momentjs.com/docs/](`moment`) formatting for dates.                                              |
+| `dateFormat`      | `YYYY-MM-DD`        | [`moment`](https://momentjs.com/docs/) formatting for dates.                                              |
 | `keyFormat`       | `null`              | Applying snakecase and kebabcase to the parameters.                                                       |
