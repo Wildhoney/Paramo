@@ -173,4 +173,6 @@ test('It should be able to return the typed default value if the value is invali
         instance.stringify({ name: 'Adam', age: 'ThirtyFour', isDeveloper: 'yes' }),
         '?name=Adam&age=34&isDeveloper=yup',
     );
+    t.is(instance.stringify({ name: 'Adam', age: null, isDeveloper: 'yes' }), '?name=Adam&isDeveloper=yup');
+    t.is(instance.stringify({ name: 'Adam', isDeveloper: 'yes' }), '?name=Adam&isDeveloper=yup&age=34');
 });
