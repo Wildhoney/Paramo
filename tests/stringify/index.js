@@ -43,11 +43,17 @@ test('It should be able to handle the stripping of default parameters for arrays
     const instance = create(types, { arrayFormat: option.arrayFormat.comma, stripDefaults: true });
     t.is(instance.stringify({ name: 'Adam', countries: ['UK'] }), '?name=Adam&countries=UK');
     {
-        const instance = create(types, { arrayFormat: option.arrayFormat.comma, stripDefaults: true });
+        const instance = create(types, {
+            arrayFormat: option.arrayFormat.comma,
+            stripDefaults: true,
+        });
         t.is(instance.stringify({ name: 'Adam', countries: ['UK', 'RU'] }), '?name=Adam');
     }
     {
-        const instance = create(types, { arrayFormat: option.arrayFormat.comma, stripDefaults: true });
+        const instance = create(types, {
+            arrayFormat: option.arrayFormat.comma,
+            stripDefaults: true,
+        });
         t.is(instance.stringify({ name: 'Adam', countries: ['RU', 'UK'] }), '?name=Adam');
     }
 });
@@ -60,11 +66,17 @@ test('It should be able to handle the stripping of default parameters for sequen
     const instance = create(types, { arrayFormat: option.arrayFormat.comma, stripDefaults: true });
     t.is(instance.stringify({ name: 'Adam', countries: ['UK'] }), '?name=Adam&countries=UK');
     {
-        const instance = create(types, { arrayFormat: option.arrayFormat.comma, stripDefaults: true });
+        const instance = create(types, {
+            arrayFormat: option.arrayFormat.comma,
+            stripDefaults: true,
+        });
         t.is(instance.stringify({ name: 'Adam', countries: ['UK', 'RU'] }), '?name=Adam');
     }
     {
-        const instance = create(types, { arrayFormat: option.arrayFormat.comma, stripDefaults: true });
+        const instance = create(types, {
+            arrayFormat: option.arrayFormat.comma,
+            stripDefaults: true,
+        });
         t.is(instance.stringify({ name: 'Adam', countries: ['RU', 'UK'] }), '?name=Adam&countries=RU,UK');
     }
 });
@@ -80,7 +92,10 @@ test('It should be able to handle the stripping of default parameters for tuples
         '?name=Adam&profile=Software%20Developer,33',
     );
     {
-        const instance = create(types, { arrayFormat: option.arrayFormat.comma, stripDefaults: true });
+        const instance = create(types, {
+            arrayFormat: option.arrayFormat.comma,
+            stripDefaults: true,
+        });
         t.is(instance.stringify({ name: 'Adam', profile: ['Software Developer', 34] }), '?name=Adam');
     }
 });

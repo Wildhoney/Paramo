@@ -52,18 +52,28 @@ test('It should be able to determine when sequenced arrays are equal;', t => {
 
 test('It should be able to decamelize objects based on the key format;', t => {
     const defaultTransform = utils.getKeyFormat({ keyFormat: null });
-    t.deepEqual(defaultTransform.decamelize({ birthDate: '1985-10-10' }), { birthDate: '1985-10-10' });
+    t.deepEqual(defaultTransform.decamelize({ birthDate: '1985-10-10' }), {
+        birthDate: '1985-10-10',
+    });
     const kebabTransform = utils.getKeyFormat({ keyFormat: option.keyFormat.kebab });
-    t.deepEqual(kebabTransform.decamelize({ birthDate: '1985-10-10' }), { 'birth-date': '1985-10-10' });
+    t.deepEqual(kebabTransform.decamelize({ birthDate: '1985-10-10' }), {
+        'birth-date': '1985-10-10',
+    });
     const snakeTransform = utils.getKeyFormat({ keyFormat: option.keyFormat.snake });
-    t.deepEqual(snakeTransform.decamelize({ birthDate: '1985-10-10' }), { birth_date: '1985-10-10' });
+    t.deepEqual(snakeTransform.decamelize({ birthDate: '1985-10-10' }), {
+        birth_date: '1985-10-10',
+    });
 });
 
 test('It should be able to camelize objects based on the key format;', t => {
     const defaultTransform = utils.getKeyFormat({ keyFormat: null });
-    t.deepEqual(defaultTransform.camelize({ birthDate: '1985-10-10' }), { birthDate: '1985-10-10' });
+    t.deepEqual(defaultTransform.camelize({ birthDate: '1985-10-10' }), {
+        birthDate: '1985-10-10',
+    });
     const kebabTransform = utils.getKeyFormat({ keyFormat: option.keyFormat.kebab });
-    t.deepEqual(kebabTransform.camelize({ 'birth-date': '1985-10-10' }), { birthDate: '1985-10-10' });
+    t.deepEqual(kebabTransform.camelize({ 'birth-date': '1985-10-10' }), {
+        birthDate: '1985-10-10',
+    });
     const snakeTransform = utils.getKeyFormat({ keyFormat: option.keyFormat.snake });
     t.deepEqual(snakeTransform.camelize({ birth_date: '1985-10-10' }), { birthDate: '1985-10-10' });
 });
