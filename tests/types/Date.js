@@ -1,5 +1,6 @@
 import test from 'ava';
 import moment from 'moment';
+import mockDate from 'mockdate';
 import { create, type } from '../../src';
 
 const types = {
@@ -7,7 +8,16 @@ const types = {
     birthDate: type.Date,
 };
 
+test.before(() => {
+    mockDate.set('10/10/2019', 1);
+});
+
+test.after(() => {
+    mockDate.reset();
+});
+
 test.beforeEach(() => (moment.suppressDeprecationWarnings = true));
+
 test.afterEach(() => (moment.suppressDeprecationWarnings = true));
 
 test('It should be able to handle Date types;', t => {
@@ -20,7 +30,7 @@ test('It should be able to handle Date types;', t => {
 
 test('It should be able to handle Unix S Date types;', t => {
     const instance = create({ ...types, birthDate: type.Date.UnixSeconds }, { dateFormat: 'YYYY-MM-DD' });
-    const parsed = instance.parse('name=Adam&birthDate=497746800000');
+    const parsed = instance.parse(`name=Adam&birthDate=${moment('1985-10-10').valueOf()}`);
     t.is(parsed.name, 'Adam');
     t.is(moment(parsed.birthDate).format('DD/MM/YYYY'), '10/10/1985');
     const stringified = instance.stringify(parsed);
@@ -29,7 +39,7 @@ test('It should be able to handle Unix S Date types;', t => {
 
 test('It should be able to handle Unix MS Date types;', t => {
     const instance = create({ ...types, birthDate: type.Date.UnixMilliseconds }, { dateFormat: 'YYYY-MM-DD' });
-    const parsed = instance.parse('name=Adam&birthDate=497746800');
+    const parsed = instance.parse(`name=Adam&birthDate=${moment('1985-10-10').unix()}`);
     t.is(parsed.name, 'Adam');
     t.is(moment(parsed.birthDate).format('DD/MM/YYYY'), '10/10/1985');
     const stringified = instance.stringify(parsed);
