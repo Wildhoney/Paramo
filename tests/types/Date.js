@@ -21,7 +21,8 @@ test('It should be able to handle Date types;', t => {
 test('It should be able to handle Unix S Date types;', t => {
     const instance = create({ ...types, birthDate: type.Date.UnixSeconds }, { dateFormat: 'YYYY-MM-DD' });
     const parsed = instance.parse('name=Adam&birthDate=497746800000');
-    t.deepEqual(parsed, { name: 'Adam', birthDate: moment('1985-10-10').toDate() });
+    t.is(parsed.name, 'Adam');
+    t.is(moment(parsed.birthDate).format('DD/MM/YYYY'), '10/10/1985');
     const stringified = instance.stringify(parsed);
     t.is(stringified, '?birthDate=1985-10-10&name=Adam');
 });
@@ -29,7 +30,8 @@ test('It should be able to handle Unix S Date types;', t => {
 test('It should be able to handle Unix MS Date types;', t => {
     const instance = create({ ...types, birthDate: type.Date.UnixMilliseconds }, { dateFormat: 'YYYY-MM-DD' });
     const parsed = instance.parse('name=Adam&birthDate=497746800');
-    t.deepEqual(parsed, { name: 'Adam', birthDate: moment('1985-10-10').toDate() });
+    t.is(parsed.name, 'Adam');
+    t.is(moment(parsed.birthDate).format('DD/MM/YYYY'), '10/10/1985');
     const stringified = instance.stringify(parsed);
     t.is(stringified, '?birthDate=1985-10-10&name=Adam');
 });
