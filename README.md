@@ -69,8 +69,8 @@ import { create, type, option } from 'paramo';
 const types = {
     name: type.String,
     age: type.Int,
-    isDeveloper: type.Bool,
-    programmingLanguages: type.Array(type.String),
+    developer: type.Bool,
+    languages: type.Array(type.String),
 };
 
 const user = create(types, {
@@ -78,15 +78,15 @@ const user = create(types, {
     arrayFormat: option.arrayFormat.comma,
 });
 
-// { name: 'Adam', age, 34: isDeveloper: true, programmingLanguages: ['JavaScript', 'Ruby', 'Haskell'] }
-user.parse('name=Adam&age=34&isDeveloper=yar&programmingLanguages=JavaScript,Ruby,Haskell');
+// { name: 'Adam', age, 34: developer: true, languages: ['JavaScript', 'Ruby', 'Haskell'] }
+user.parse('name=Adam&age=34&developer=yar&languages=JavaScript,Ruby,Haskell');
 
-// name=Adam&age=34&isDeveloper=yar&programmingLanguages=JavaScript,Ruby,Haskell
+// name=Adam&age=34&developer=yar&languages=JavaScript,Ruby,Haskell
 user.stringify({
     name: 'Adam',
     age: 34,
-    isDeveloper: true,
-    programmingLanguages: ['Javascript', 'Ruby', 'Haskell'],
+    developer: true,
+    languages: ['Javascript', 'Ruby', 'Haskell'],
 });
 ```
 
@@ -98,6 +98,6 @@ user.stringify({
 | `stripRedundant`  | `false`             | Exclude parameters which are not included in the types.                                                   |
 | `booleanStrings`  | `['true', 'false']` | Tuple of custom boolean types: `['yup', 'nup']`.                                                          |
 | `arrayFormat`     | `null`              | [`query-string`](https://github.com/sindresorhus/query-string) option for representing arrays as strings. |
-| `stripDefaults`   | `false`             | Whether default values are stipped when stringifying.                                                     |
+| `stripDefaults`   | `false`             | Whether default values are stripped when stringifying.                                                    |
 | `dateFormat`      | `YYYY-MM-DD`        | [`moment`](https://momentjs.com/docs/) formatting for dates.                                              |
 | `keyFormat`       | `null`              | Applying snakecase and kebabcase to the parameters.                                                       |
