@@ -90,6 +90,30 @@ user.stringify({
 });
 ```
 
+## Default Values
+
+You can set defaults for the parameters by using the array notation. For example if by default all users are developers, then you can bake that into your types.
+
+```javascript
+const types = {
+    name: type.String,
+    age: type.Int,
+    developer: [type.Bool, true],
+    languages: type.Array(type.String),
+};
+```
+
+When you `user.stringify` all parameters are still set, but in some cases you may wish for the default values to be omitted, as the default values may not matter if they are also baked into the back-end. For these instances you can set the `stripDefaults` option when creating the type instance.
+
+```javascript
+const user = create(types, {
+    booleanStrings: ['yar', 'naw'],
+    stripDefaults: true,
+});
+```
+
+Furthermore when dealing with defaults you may wish for defaults to appear in `user.parse` unless they're defined in the URL parameters &ndash; you can use the `includeDefaults` option. You can use the same option for `user.stringify` if you don't set the aforementioned `stripDefaults` option.
+
 ## Configurable Options
 
 | Option            | Default             | Description                                                                                               |
