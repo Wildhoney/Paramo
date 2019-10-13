@@ -47,18 +47,18 @@ import { create, type } from 'paramo';
 const types = {
     name: type.String,
     age: type.Int,
-    isDeveloper: type.Bool,
+    developer: type.Bool,
 };
 
 const user = create(types, {
     booleanStrings: ['yar', 'naw'],
 });
 
-// { name: 'Adam', age, 34: isDeveloper: true }
-user.parse('name=Adam&age=34&isDeveloper=yar');
+// { name: 'Adam', age, 34: developer: true }
+user.parse('name=Adam&age=34&developer=yar');
 
-// name=Adam&age=34&isDeveloper=yar
-user.stringify({ name: 'Adam', age: 34, isDeveloper: true });
+// name=Adam&age=34&developer=yar
+user.stringify({ name: 'Adam', age: 34, developer: true });
 ```
 
 We can then introduce the concept of arrays which uses [the `query-string` API](https://github.com/sindresorhus/query-string#api) for specifying how lists are represented &ndash; by default as duplicate keys.
