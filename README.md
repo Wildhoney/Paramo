@@ -1,4 +1,4 @@
-# Paramo
+<img src="media/logo.png" alt="Paramo" width="300" />
 
 > Swiss-army knife of stringifying, parsing and manipulating URL parameters by applying types to the parameters.
 
