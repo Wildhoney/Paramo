@@ -176,3 +176,11 @@ test('It should be able to return the typed default value if the value is invali
     t.is(instance.stringify({ name: 'Adam', age: null, isDeveloper: 'yes' }), '?name=Adam&isDeveloper=yup');
     t.is(instance.stringify({ name: 'Adam', isDeveloper: 'yes' }), '?name=Adam&isDeveloper=yup&age=34');
 });
+
+test('It should be able to handle the stringifying when the values are arrays;', t => {
+    const instance = create({
+        countries: [type.Array(type.String), []],
+    });
+    t.is(instance.stringify({}), '');
+    t.is(instance.stringify({ countries: [] }), '');
+});
