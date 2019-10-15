@@ -10,7 +10,7 @@ export function getDefaultParams() {
 }
 
 export function getType(type, options) {
-    const [typer, defaultValue = null] = [].concat(type);
+    const [typer, defaultValue = typer.defaultValue || null] = [].concat(type);
     const toType = typer.toType(options);
     const toString = typer.toString(options);
     const isSame = typer.isSame || equals;

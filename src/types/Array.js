@@ -13,12 +13,14 @@ const Type = type => ({
         if (!Array.isArray(values)) throw new TypeError('Invalid t.Array');
         return values.map(value => type.toString(options)(value));
     },
+    defaultValue: [],
     isSame: (a, b) => equals([...a].sort(), [...b].sort()),
 });
 
 Type.Sequence = type => ({
     toType: Type(type).toType,
     toString: Type(type).toString,
+    defaultValue: [],
 });
 
 export default Type;

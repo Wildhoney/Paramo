@@ -107,3 +107,17 @@ test('It should be able to sanitize arrays when its values are invalid;', t => {
     t.deepEqual(parsed, { name: 'Adam' });
     t.is(instance.stringify({ name: 'Adam', countries: 'UK' }), '?name=Adam');
 });
+
+test('It should be able to default to an empty array instead of null when not specified;', t => {
+    const instance = create(
+        { ...types, countries: type.Array(type.String) },
+        {
+            arrayFormat: option.arrayFormat.comma,
+            includeDefaults: true,
+        },
+    );
+    const parsed = instance.parse('name=Adam');
+    t.deepEqual(parsed, { name: 'Adam', countries: [] });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?name=Adam');
+});
