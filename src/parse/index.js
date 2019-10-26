@@ -1,5 +1,4 @@
 import qs from 'query-string';
-import { isEmpty } from 'ramda';
 import * as utils from '../utils';
 
 export default function parse(types, options) {
@@ -30,9 +29,7 @@ export default function parse(types, options) {
                 return { ...model, [key]: parsedValue };
             } catch (error) {
                 if (error instanceof utils.TypeError)
-                    return options.includeDefaults && defaultValue && !isEmpty(defaultValue)
-                        ? { ...model, [key]: defaultValue }
-                        : { ...model };
+                    return options.includeDefaults ? { ...model, [key]: defaultValue } : { ...model };
                 throw error;
             }
         }, {});
