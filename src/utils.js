@@ -28,8 +28,8 @@ export function getKeyFormat(options) {
     return !options.keyFormat
         ? { camelize: a => a, decamelize: a => a }
         : {
-              camelize: a => camelize(a, { separator }),
-              decamelize: a => decamelize(a, { separator, split: options.splitKeys }),
+              camelize: a => camelize(a, { separator, process: options.processKeys }),
+              decamelize: a => decamelize(a, { separator, split: options.splitKeys, process: options.processKeys }),
           };
 }
 

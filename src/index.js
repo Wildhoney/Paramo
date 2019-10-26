@@ -18,6 +18,7 @@ const defaultOptions = {
     keyFormat: null,
     pascaliseKeys: false,
     splitKeys: null,
+    processKeys: null,
 };
 
 export const option = {
