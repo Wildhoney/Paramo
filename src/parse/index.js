@@ -9,7 +9,9 @@ export default function parse(types, options) {
         const parsedParams = keyFormat.camelize(qs.parse(params, { arrayFormat }));
 
         // Including defaults should take from both the types and the parameters.
-        const keys = options.includeDefaults ? Object.keys({ ...types, ...parsedParams }) : Object.keys(parsedParams);
+        const keys = options.includeDefaults
+            ? Object.keys({ ...keyFormat.camelize(types), ...parsedParams })
+            : Object.keys(parsedParams);
 
         return keys.reduce((model, key) => {
             const type = types[key];
