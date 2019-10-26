@@ -15,7 +15,7 @@ const Type = {
 Type.DP = decimalPlaces => ({
     toType: () => value => {
         const typedValue = Type.toType()(value);
-        return typedValue.toFixed(decimalPlaces);
+        return Type.toType()(typedValue.toFixed(decimalPlaces));
     },
     toString: () => String,
 });

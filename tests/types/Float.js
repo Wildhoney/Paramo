@@ -15,11 +15,11 @@ test('It should be able to handle Float types;', t => {
 });
 
 test('It should be able to handle Float types with decimal places;', t => {
-    const instance = create({ ...types, age: type.Float.DP(3) });
-    const parsed = instance.parse('name=Adam&age=34.100');
-    t.deepEqual(parsed, { name: 'Adam', age: '34.100' });
+    const instance = create({ ...types, age: type.Float.DP(2) });
+    const parsed = instance.parse('name=Adam&age=34.18900');
+    t.deepEqual(parsed, { name: 'Adam', age: 34.19 });
     const stringified = instance.stringify(parsed);
-    t.is(stringified, '?age=34.100&name=Adam');
+    t.is(stringified, '?age=34.19&name=Adam');
 });
 
 test('It should be able to sanitize BigInts when the value is invalid;', t => {
