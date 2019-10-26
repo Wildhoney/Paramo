@@ -16,6 +16,7 @@ const defaultOptions = {
     booleanStrings: ['true', 'false'],
     dateFormat: 'YYYY-MM-DD',
     keyFormat: null,
+    pascaliseKeys: false,
 };
 
 export const option = {
