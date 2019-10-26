@@ -128,4 +128,3 @@ Furthermore when dealing with defaults you may wish for defaults to appear in `u
 | `splitKeys`       | `null`              | Allows the [custom splitting of keys](https://github.com/domchristie/humps#humpsdecamelizestring-options) when decamelising. |
 | `pascaliseKeys`   | `false`             | Allows the [Pascalising](https://github.com/domchristie/humps#humpspascalizestring) of the keys.                             |
 | `processKeys`     | `null`              | Allows the setting up of a [key processing function](https://github.com/domchristie/humps#converting-object-keys).           |
-| `domain`          | `null`              | Prepends the domain to the stringified output.                                                                               |

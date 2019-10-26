@@ -1,6 +1,5 @@
 import qs from 'query-string';
 import { isEmpty } from 'ramda';
-import joinUrl from 'url-join';
 import * as utils from '../utils';
 
 export default function stringify(types, options) {
@@ -47,13 +46,11 @@ export default function stringify(types, options) {
             }
         }, {});
 
-        const stringified = isEmpty(parsedParams)
+        return isEmpty(parsedParams)
             ? ''
             : `?${qs.stringify(keyFormat.decamelize(parsedParams), {
                   sort: false,
                   arrayFormat,
               })}`;
-
-        return options.domain ? joinUrl(options.domain, stringified) : stringified;
     };
 }

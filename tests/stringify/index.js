@@ -184,15 +184,3 @@ test('It should be able to handle the stringifying when the values are arrays;',
     t.is(instance.stringify({}), '');
     t.is(instance.stringify({ countries: [] }), '');
 });
-
-test('It should be able to pass the domain for auto joining the parameters to it;', t => {
-    const instance = create(
-        {
-            name: type.String,
-            age: type.Int,
-        },
-        { domain: 'https://www.example.org/' },
-    );
-    t.is(instance.stringify({ name: 'Adam', age: 33 }), 'https://www.example.org?name=Adam&age=33');
-    t.is(instance.stringify({}), 'https://www.example.org');
-});
