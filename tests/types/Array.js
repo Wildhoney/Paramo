@@ -121,3 +121,18 @@ test('It should be able to default to an empty array instead of null when not sp
     const stringified = instance.stringify(parsed);
     t.is(stringified, '?name=Adam');
 });
+
+test('It should be able to handle the defaults;', t => {
+    const types = { name: type.String, ratings: [type.Array(type.Int), [1, 2, 3]] };
+
+    const instance = create(types, {
+        stripDefaults: true,
+        includeDefaults: true,
+        keyFormat: option.keyFormat.kebab,
+    });
+    const stringified = instance.stringify({
+        name: 'Adam',
+    });
+
+    t.is(stringified, '?name=Adam&ratings=1&ratings=2&ratings=3');
+});

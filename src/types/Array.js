@@ -14,7 +14,10 @@ const Type = type => ({
         return values.map(value => type.toString(options)(value));
     },
     defaultValue: [],
-    isSame: (a, b) => equals([...a].sort(), [...b].sort()),
+    isSame: (a, b) => {
+        if (Boolean(!Array.isArray(a)) ^ Boolean(!Array.isArray(b))) return false;
+        return equals([...a].sort(), [...b].sort());
+    },
 });
 
 Type.Sequence = type => ({
