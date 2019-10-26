@@ -17,6 +17,7 @@ const defaultOptions = {
     dateFormat: 'YYYY-MM-DD',
     keyFormat: null,
     pascaliseKeys: false,
+    splitKeys: null,
 };
 
 export const option = {

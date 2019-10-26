@@ -29,7 +29,7 @@ export function getKeyFormat(options) {
         ? { camelize: a => a, decamelize: a => a }
         : {
               camelize: a => camelize(a, { separator }),
-              decamelize: a => decamelize(a, { separator }),
+              decamelize: a => decamelize(a, { separator, split: options.splitKeys }),
           };
 }
 
