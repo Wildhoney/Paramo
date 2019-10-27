@@ -80,4 +80,11 @@ test('It should be able to handle URL parameters in a different format;', t => {
             dateOfBirth: moment('1985-10-10').toDate(),
         });
     }
+    {
+        const instance = create(types, { keyFormat: option.keyFormat.pascal });
+        t.deepEqual(instance.parse('Name=Adam&DateOfBirth=1985-10-10'), {
+            name: 'Adam',
+            dateOfBirth: moment('1985-10-10').toDate(),
+        });
+    }
 });

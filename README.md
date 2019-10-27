@@ -124,7 +124,7 @@ Furthermore when dealing with defaults you may wish for defaults to appear in `u
 | `arrayFormat`         | `null`              | [`query-string`](https://github.com/sindresorhus/query-string) option for representing arrays as strings.                    |
 | `stripDefaults`       | `false`             | Whether default values are stripped when stringifying.                                                                       |
 | `dateFormat`          | `YYYY-MM-DD`        | [`moment`](https://momentjs.com/docs/) formatting for dates.                                                                 |
-| `keyFormat`           | `null`              | Applying snakecase and kebabcase to the parameters.                                                                          |
+| `keyFormat`           | `null`              | Applying snakecase, kebabcase and pascalcase to the parameters.                                                              |
 | `splitKeys`           | `null`              | Allows the [custom splitting of keys](https://github.com/domchristie/humps#humpsdecamelizestring-options) when decamelising. |
 | `processKeys`         | `null`              | Allows the setting up of a [key processing function](https://github.com/domchristie/humps#converting-object-keys).           |
 | `includeQuestionMark` | `true`              | Whether to include the question mark when stringifying params.                                                               |

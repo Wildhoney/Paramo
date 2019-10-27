@@ -31,6 +31,7 @@ export const option = {
     keyFormat: {
         snake: Symbol('_'),
         kebab: Symbol('-'),
+        pascal: Symbol('pascal'),
     },
 };
 

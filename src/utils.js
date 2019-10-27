@@ -25,9 +25,16 @@ export function getKeyFormat(options) {
     return !options.keyFormat
         ? { camelize: a => a, decamelize: a => a }
         : {
-              camelize: a => humps.camelizeKeys(a, { separator, process: options.processKeys }),
-              decamelize: a =>
-                  humps.decamelizeKeys(a, { separator, split: options.splitKeys, process: options.processKeys }),
+              camelize: a => {
+                  const args = { process: options.processKeys };
+                  if (options.keyFormat === option.keyFormat.pascal) return humps.camelizeKeys(a, args);
+                  return humps.camelizeKeys(a, { ...args, separator });
+              },
+              decamelize: a => {
+                  const args = { split: options.splitKeys, process: options.processKeys };
+                  if (options.keyFormat === option.keyFormat.pascal) return humps.pascalizeKeys(a, args);
+                  return humps.decamelizeKeys(a, { ...args, separator });
+              },
           };
 }
 

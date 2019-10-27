@@ -160,6 +160,13 @@ test('It should be able to handle URL parameters in a different format;', t => {
             '?name=Adam&date_of_birth=1985-10-10',
         );
     }
+    {
+        const instance = create(types, { keyFormat: option.keyFormat.pascal });
+        t.is(
+            instance.stringify({ name: 'Adam', dateOfBirth: moment('1985-10-10').toDate() }),
+            '?Name=Adam&DateOfBirth=1985-10-10',
+        );
+    }
 });
 
 test('It should be able to return the typed default value if the value is invalid;', t => {
