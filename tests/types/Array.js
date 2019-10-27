@@ -126,7 +126,7 @@ test('It should be able to handle the defaults;', t => {
     const types = { name: type.String, ratings: [type.Array(type.Int), [1, 2, 3]] };
 
     const instance = create(types, {
-        stripDefaults: true,
+        stripDefaults: false,
         includeDefaults: true,
         keyFormat: option.keyFormat.kebab,
     });
@@ -135,4 +135,17 @@ test('It should be able to handle the defaults;', t => {
     });
 
     t.is(stringified, '?name=Adam&ratings=1&ratings=2&ratings=3');
+
+    {
+        const instance = create(types, {
+            stripDefaults: true,
+            includeDefaults: true,
+            keyFormat: option.keyFormat.kebab,
+        });
+        const stringified = instance.stringify({
+            name: 'Adam',
+        });
+
+        t.is(stringified, '?name=Adam');
+    }
 });

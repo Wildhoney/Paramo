@@ -26,7 +26,12 @@ export default function stringify(types, options) {
             if (options.stripDefaults && isSame(defaultValue, value)) return model;
 
             try {
-                const parsedValue = value != null ? toString(value) : options.includeDefaults ? defaultValue : null;
+                const parsedValue =
+                    value != null
+                        ? toString(value)
+                        : options.includeDefaults && !options.stripDefaults
+                        ? defaultValue
+                        : null;
 
                 // Omit null and empty values in the links.
                 if (value === null || parsedValue == null || isEmpty(parsedValue)) return model;
