@@ -21,6 +21,7 @@ const defaultOptions = {
     processKeys: null,
     encodeParams: true,
     decodeParams: true,
+    sortParams: false,
 };
 
 export const option = {

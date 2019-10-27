@@ -130,3 +130,4 @@ Furthermore when dealing with defaults you may wish for defaults to appear in `u
 | `includeQuestionMark` | `true`              | Whether to include the question mark when stringifying params.                                                               |
 | `encodeParams`        | `true`              | Determines whether keys and values are encoded.                                                                              |
 | `decodeParams`        | `true`              | Determines whether keys and values are decoded.                                                                              |
+| `sortParams`          | `false`             | Toggle the sorting of params when stringifying parameters.                                                                   |
