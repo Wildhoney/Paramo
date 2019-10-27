@@ -22,8 +22,8 @@ export function getKeyFormat(options) {
     const isSet = Object.values(option.keyFormat).includes(options.keyFormat);
     const separator = isSet ? options.keyFormat.description : null;
 
-    const camelize = options.pascaliseKeys ? humps.pascalizeKeys : humps.camelizeKeys;
-    const decamelize = options.pascaliseKeys ? humps.depascalizeKeys : humps.decamelizeKeys;
+    const camelize = options.pascaliseKeys ? humps.pascalizeKeys.bind(humps) : humps.camelizeKeys;
+    const decamelize = options.pascaliseKeys ? humps.depascalizeKeys.bind(humps) : humps.decamelizeKeys;
 
     return !options.keyFormat
         ? { camelize: a => a, decamelize: a => a }
