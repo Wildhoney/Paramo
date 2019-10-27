@@ -19,6 +19,8 @@ const defaultOptions = {
     keyFormat: null,
     splitKeys: null,
     processKeys: null,
+    encodeParams: true,
+    decodeParams: true,
 };
 
 export const option = {

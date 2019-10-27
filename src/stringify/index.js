@@ -51,6 +51,7 @@ export default function stringify(types, options) {
             : `${options.includeQuestionMark ? '?' : ''}${qs.stringify(keyFormat.decamelize(parsedParams), {
                   sort: false,
                   arrayFormat,
+                  encode: options.encodeParams,
               })}`;
     };
 }

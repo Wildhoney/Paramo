@@ -128,3 +128,5 @@ Furthermore when dealing with defaults you may wish for defaults to appear in `u
 | `splitKeys`           | `null`              | Allows the [custom splitting of keys](https://github.com/domchristie/humps#humpsdecamelizestring-options) when decamelising. |
 | `processKeys`         | `null`              | Allows the setting up of a [key processing function](https://github.com/domchristie/humps#converting-object-keys).           |
 | `includeQuestionMark` | `true`              | Whether to include the question mark when stringifying params.                                                               |
+| `encodeParams`        | `true`              | Determines whether keys and values are encoded.                                                                              |
+| `decodeParams`        | `true`              | Determines whether keys and values are decoded.                                                                              |
