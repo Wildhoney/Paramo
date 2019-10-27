@@ -35,7 +35,10 @@ export default function stringify(types, options) {
             } catch (error) {
                 if (error instanceof utils.TypeError)
                     try {
-                        return options.includeDefaults && defaultValue && !isEmpty(defaultValue)
+                        return options.includeDefaults &&
+                            !options.stripDefaults &&
+                            defaultValue != null &&
+                            !isEmpty(defaultValue)
                             ? { ...model, [key]: toString(defaultValue) }
                             : model;
                     } catch (error) {
