@@ -48,7 +48,7 @@ export default function stringify(types, options) {
 
         return isEmpty(parsedParams)
             ? ''
-            : `?${qs.stringify(keyFormat.decamelize(parsedParams), {
+            : `${options.includeQuestionMark ? '?' : ''}${qs.stringify(keyFormat.decamelize(parsedParams), {
                   sort: false,
                   arrayFormat,
               })}`;
