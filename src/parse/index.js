@@ -1,6 +1,5 @@
 import qs from 'query-string';
 import * as utils from '../utils';
-import { Object } from 'core-js';
 
 export default function parse(types, options) {
     const keyFormat = utils.getKeyFormat(options);
