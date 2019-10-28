@@ -11,7 +11,7 @@ export function create(types, options = defaultOptions) {
 const defaultOptions = {
     arrayFormat: null,
     includeDefaults: false,
-    includeQuestionMark: true,
+    stripPrefix: false,
     stripDefaults: false,
     stripRedundant: false,
     booleanStrings: ['true', 'false'],

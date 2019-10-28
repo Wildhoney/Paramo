@@ -116,18 +116,18 @@ Furthermore when dealing with defaults you may wish for defaults to appear in `u
 
 ## Configurable Options
 
-| Option                | Default             | Description                                                                                                                  |
-| --------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `includeDefaults`     | `true`              | Include default parameters set in the types.                                                                                 |
-| `stripRedundant`      | `false`             | Exclude parameters which are not included in the types.                                                                      |
-| `booleanStrings`      | `['true', 'false']` | Tuple of custom boolean types: `['yup', 'nup']`.                                                                             |
-| `arrayFormat`         | `null`              | [`query-string`](https://github.com/sindresorhus/query-string) option for representing arrays as strings.                    |
-| `stripDefaults`       | `false`             | Whether default values are stripped when stringifying.                                                                       |
-| `dateFormat`          | `YYYY-MM-DD`        | [`moment`](https://momentjs.com/docs/) formatting for dates.                                                                 |
-| `keyFormat`           | `null`              | Applying snakecase, kebabcase and pascalcase to the parameters.                                                              |
-| `splitKeys`           | `null`              | Allows the [custom splitting of keys](https://github.com/domchristie/humps#humpsdecamelizestring-options) when decamelising. |
-| `processKeys`         | `null`              | Allows the setting up of a [key processing function](https://github.com/domchristie/humps#converting-object-keys).           |
-| `includeQuestionMark` | `true`              | Whether to include the question mark when stringifying params.                                                               |
-| `encodeParams`        | `true`              | Determines whether keys and values are encoded.                                                                              |
-| `decodeParams`        | `true`              | Determines whether keys and values are decoded.                                                                              |
-| `sortParams`          | `false`             | Toggle the sorting of params when stringifying parameters.                                                                   |
+| Option            | Default             | Description                                                                                                                  |
+| ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `includeDefaults` | `true`              | Include default parameters set in the types.                                                                                 |
+| `stripRedundant`  | `false`             | Exclude parameters which are not included in the types.                                                                      |
+| `booleanStrings`  | `['true', 'false']` | Tuple of custom boolean types: `['yup', 'nup']`.                                                                             |
+| `arrayFormat`     | `null`              | [`query-string`](https://github.com/sindresorhus/query-string) option for representing arrays as strings.                    |
+| `stripDefaults`   | `false`             | Whether default values are stripped when stringifying.                                                                       |
+| `dateFormat`      | `YYYY-MM-DD`        | [`moment`](https://momentjs.com/docs/) formatting for dates.                                                                 |
+| `keyFormat`       | `null`              | Applying snakecase, kebabcase and pascalcase to the parameters.                                                              |
+| `splitKeys`       | `null`              | Allows the [custom splitting of keys](https://github.com/domchristie/humps#humpsdecamelizestring-options) when decamelising. |
+| `processKeys`     | `null`              | Allows the setting up of a [key processing function](https://github.com/domchristie/humps#converting-object-keys).           |
+| `stripPrefix`     | `false`             | Whether to include the question mark when stringifying params.                                                               |
+| `encodeParams`    | `true`              | Determines whether keys and values are encoded.                                                                              |
+| `decodeParams`    | `true`              | Determines whether keys and values are decoded.                                                                              |
+| `sortParams`      | `false`             | Function for sorting the params when stringifying.                                                                           |
