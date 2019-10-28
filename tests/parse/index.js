@@ -24,6 +24,18 @@ test("It should be able to re-throw the error if it isn't related to types;", t 
     t.throws(() => instance.parse('name=Adam'), 'typer.toType is not a function');
 });
 
+test('It should be able to create objects with null prototype;', t => {
+    const types = {
+        name: type.String,
+    };
+    const instance = create(types, { plainObject: true });
+    t.falsy(instance.parse('name=Adam').hasOwnProperty);
+    {
+        const instance = create(types, { plainObject: false });
+        t.truthy(instance.parse('name=Adam').hasOwnProperty);
+    }
+});
+
 test('It should be able to handle the inclusion of the default parameters;', t => {
     const types = {
         name: type.String,

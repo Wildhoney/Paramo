@@ -22,6 +22,7 @@ const defaultOptions = {
     encodeParams: true,
     decodeParams: true,
     sortParams: false,
+    plainObject: false,
 };
 
 export const option = {

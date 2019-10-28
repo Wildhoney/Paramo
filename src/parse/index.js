@@ -1,5 +1,6 @@
 import qs from 'query-string';
 import * as utils from '../utils';
+import { Object } from 'core-js';
 
 export default function parse(types, options) {
     const keyFormat = utils.getKeyFormat(options);
@@ -13,7 +14,7 @@ export default function parse(types, options) {
             ? Object.keys({ ...keyFormat.camelize(types), ...parsedParams })
             : Object.keys(parsedParams);
 
-        return keys.reduce((model, key) => {
+        const parsed = keys.reduce((model, key) => {
             const type = types[key];
             const value = parsedParams[key];
 
@@ -35,5 +36,10 @@ export default function parse(types, options) {
                 throw error;
             }
         }, {});
+
+        if (!options.plainObject) return parsed;
+        const plain = Object.create(null);
+        Object.entries(parsed).forEach(([key, value]) => (plain[key] = value));
+        return plain;
     };
 }

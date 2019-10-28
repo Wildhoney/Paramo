@@ -131,3 +131,4 @@ Furthermore when dealing with defaults you may wish for defaults to appear in `u
 | `encodeParams`    | `true`              | Determines whether keys and values are encoded.                                                                              |
 | `decodeParams`    | `true`              | Determines whether keys and values are decoded.                                                                              |
 | `sortParams`      | `false`             | Function for sorting the params when stringifying.                                                                           |
+| `plainObject`     | `false`             | Force the parsed object to return a plain object.                                                                            |
