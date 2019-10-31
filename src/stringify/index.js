@@ -30,7 +30,7 @@ export default function stringify(types, options) {
                     value != null
                         ? toString(value)
                         : options.includeDefaults && !options.stripDefaults
-                        ? defaultValue
+                        ? toString(defaultValue)
                         : null;
 
                 // Omit null and empty values in the links.
