@@ -1,6 +1,7 @@
 import { TypeError } from '../utils';
 
 export default (...types) => ({
+    defaultValue: [],
     toType: options => value => {
         if (!Array.isArray(value) && (value.includes(',') && options.arrayFormat !== 'none'))
             throw new TypeError('Invalid t.Tuple');

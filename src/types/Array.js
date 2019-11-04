@@ -2,6 +2,7 @@ import { equals } from 'ramda';
 import { TypeError } from '../utils';
 
 const Type = type => ({
+    defaultValue: [],
     toType: options => value => {
         if (!Array.isArray(value) && (value.includes(',') && options.arrayFormat !== 'none'))
             throw new TypeError('Invalid t.Array');
@@ -13,7 +14,6 @@ const Type = type => ({
         if (!Array.isArray(values)) throw new TypeError('Invalid t.Array');
         return values.map(value => type.toString(options)(value));
     },
-    defaultValue: [],
     isSame: (a, b) => {
         const x = Array.isArray(a) ? [...a].sort() : a;
         const y = Array.isArray(b) ? [...b].sort() : b;
@@ -22,9 +22,9 @@ const Type = type => ({
 });
 
 Type.Sequence = type => ({
+    defaultValue: [],
     toType: Type(type).toType,
     toString: Type(type).toString,
-    defaultValue: [],
 });
 
 export default Type;
