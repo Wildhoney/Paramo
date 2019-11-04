@@ -30,7 +30,6 @@ export default function parse(types, options) {
                 const parsedValue = value != null ? toType(value) : defaultValue;
                 return { ...model, [key]: parsedValue };
             } catch (error) {
-                options.debugMode && console.error(error);
                 if (error instanceof utils.TypeError)
                     return options.includeDefaults ? { ...model, [key]: defaultValue } : model;
                 throw error;
