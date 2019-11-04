@@ -47,9 +47,12 @@ export default function stringify(types, options) {
                             ? { ...model, [key]: toString(defaultValue) }
                             : model;
                     } catch (error) {
+                        options.debugMode && console.error(error);
                         if (error instanceof utils.TypeError) return model;
                         throw error;
                     }
+
+                options.debugMode && console.error(error);
                 throw error;
             }
         }, {});
