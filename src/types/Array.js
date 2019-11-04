@@ -15,8 +15,9 @@ const Type = type => ({
     },
     defaultValue: [],
     isSame: (a, b) => {
-        if (Boolean(!Array.isArray(a)) ^ Boolean(!Array.isArray(b))) return false;
-        return equals([...a].sort(), [...b].sort());
+        const x = Array.isArray(a) ? [...a].sort() : a;
+        const y = Array.isArray(b) ? [...b].sort() : b;
+        return equals(x, y);
     },
 });
 
