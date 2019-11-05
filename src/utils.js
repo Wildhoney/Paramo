@@ -9,18 +9,22 @@ export function getDefaultParams() {
     return isAvailable ? global.location.search : null;
 }
 
+function getSymbolDescription(symbol) {
+    return symbol.description ?? symbol.toString().replace(/(?:Symbol|[()])/g, '');
+}
+
 export function getType(type, options) {
-    const [typer, defaultValue = typer.defaultValue || null] = [].concat(type);
+    const [typer, defaultValue = typer.defaultValue ?? null] = [].concat(type);
     const toType = typer.toType(options);
     const toString = typer.toString(options);
-    const isSame = typer.isSame || equals;
+    const isSame = typer.isSame ?? equals;
 
     return { toType, toString, defaultValue, isSame };
 }
 
 export function getKeyFormat(options) {
     const isSet = Object.values(option.keyFormat).includes(options.keyFormat);
-    const separator = isSet ? options.keyFormat.description : null;
+    const separator = isSet ? getSymbolDescription(options.keyFormat) : null;
 
     return !options.keyFormat
         ? { camelize: a => a, decamelize: a => a }
@@ -40,5 +44,5 @@ export function getKeyFormat(options) {
 
 export function getArrayFormat(options) {
     const isSet = Object.values(option.arrayFormat).includes(options.arrayFormat);
-    return isSet ? options.arrayFormat.description : null;
+    return isSet ? getSymbolDescription(options.arrayFormat) : null;
 }
