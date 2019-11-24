@@ -1,6 +1,6 @@
 {
     "name": "paramo",
-    "version": "1.11.0",
+    "version": "1.12.0",
     "description": "🌵Swiss-army knife of stringifying, parsing and manipulating URL parameters by applying types to the parameters.",
     "main": "dist/paramo.cjs.js",
     "module": "dist/paramo.esm.js",
