@@ -14,7 +14,7 @@ function getSymbolDescription(symbol) {
 }
 
 export function isInvalidArray(value, options) {
-    return !Array.isArray(value) && (value.includes(',') && options.arrayFormat !== 'none');
+    return !Array.isArray(value) && value.includes(',') && options.arrayFormat !== 'none';
 }
 
 export function getType(type, options) {

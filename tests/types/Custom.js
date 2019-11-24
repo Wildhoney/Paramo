@@ -23,7 +23,14 @@ const types = {
 
 test('It should be able to handle custom types;', t => {
     const instance = create(types);
-    const model = { name: 'Adam', location: [[1, 2], [3, 4], [5, 6]] };
+    const model = {
+        name: 'Adam',
+        location: [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+        ],
+    };
     const stringified = instance.stringify(model);
     t.snapshot(stringified);
     const parsed = instance.parse(stringified);
