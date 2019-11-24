@@ -1,12 +1,10 @@
 import { equals } from 'ramda';
-import { TypeError } from '../utils';
+import { TypeError, isInvalidArray } from '../utils';
 
 const Type = type => ({
     defaultValue: [],
     toType: options => value => {
-        if (!Array.isArray(value) && (value.includes(',') && options.arrayFormat !== 'none'))
-            throw new TypeError('Invalid t.Array');
-
+        if (isInvalidArray(value, options)) throw new TypeError('Invalid t.Array');
         const values = Array.isArray(value) ? value : [].concat(value);
         return values.map(value => type.toType(options)(value));
     },

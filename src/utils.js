@@ -13,6 +13,10 @@ function getSymbolDescription(symbol) {
     return symbol.description ?? symbol.toString().replace(/(?:Symbol|[()])/g, '');
 }
 
+export function isInvalidArray(value, options) {
+    return !Array.isArray(value) && (value.includes(',') && options.arrayFormat !== 'none');
+}
+
 export function getType(type, options) {
     const [typer, defaultValue = typer.defaultValue ?? null] = [].concat(type);
     const toType = typer.toType(options);
