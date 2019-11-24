@@ -9,10 +9,10 @@ export function create(types, options = defaultOptions) {
 }
 
 const defaultOptions = {
-    arrayFormat: null,
     includeDefaults: false,
-    stripPrefix: false,
     stripDefaults: false,
+    arrayFormat: null,
+    stripPrefix: false,
     stripRedundant: false,
     booleanStrings: ['true', 'false'],
     dateFormat: 'YYYY-MM-DD',
