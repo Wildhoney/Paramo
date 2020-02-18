@@ -21,7 +21,8 @@ test("It should be able to re-throw the error if it isn't related to types;", t 
         name: () => {},
     };
     const instance = create(types);
-    t.throws(() => instance.parse('name=Adam'), 'typer.toType is not a function');
+    const error = t.throws(() => instance.parse('name=Adam'), { instanceOf: Error });
+    t.is(error.message, 'typer.toType is not a function');
 });
 
 test('It should be able to create objects with null prototype;', t => {
