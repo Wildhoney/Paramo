@@ -52,3 +52,14 @@ test('It should be able to sanitize Dates when the value is invalid;', t => {
     t.deepEqual(parsed, { name: 'Adam' });
     t.is(instance.stringify({ name: 'Adam', birthDate: '10th Oct 1985' }), '?name=Adam');
 });
+
+test('It should be able to handle dates with a default value defined as a function;', t => {
+    const instance = create(
+        { ...types, birthDate: [type.Date, () => moment('2020-10-10').toDate()] },
+        { dateFormat: 'YYYY-MM-DD', includeDefaults: true },
+    );
+    const parsed = instance.parse('name=Adam');
+    t.deepEqual(parsed, { name: 'Adam', birthDate: moment('2020-10-10').toDate() });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?name=Adam&birthDate=2020-10-10');
+});

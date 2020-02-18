@@ -23,7 +23,12 @@ export function getType(type, options) {
     const toString = typer.toString(options);
     const isSame = typer.isSame ?? equals;
 
-    return { toType, toString, defaultValue, isSame };
+    return {
+        toType,
+        toString,
+        defaultValue: typeof defaultValue === 'function' ? defaultValue() : defaultValue,
+        isSame,
+    };
 }
 
 export function getKeyFormat(options) {
