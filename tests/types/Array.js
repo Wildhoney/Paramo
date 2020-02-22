@@ -149,3 +149,25 @@ test('It should be able to handle the defaults;', t => {
         t.is(stringified, '?name=Adam');
     }
 });
+
+test('It should be able to handle custom separated arrays with a single value;', t => {
+    const instance = create(types, {
+        arrayFormat: option.arrayFormat.separator,
+        arrayFormatSeparator: '|',
+    });
+    const parsed = instance.parse('name=Adam&countries=UK');
+    t.deepEqual(parsed, { name: 'Adam', countries: ['UK'] });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?countries=UK&name=Adam');
+});
+
+test('It should be able to handle custom separated arrays with multiple values;', t => {
+    const instance = create(types, {
+        arrayFormat: option.arrayFormat.separator,
+        arrayFormatSeparator: '|',
+    });
+    const parsed = instance.parse('name=Adam&countries=UK|RU|NZ');
+    t.deepEqual(parsed, { name: 'Adam', countries: ['UK', 'RU', 'NZ'] });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?countries=UK|RU|NZ&name=Adam');
+});

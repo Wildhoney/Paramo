@@ -60,6 +60,7 @@ export default function stringify(types, options) {
             : `${options.stripPrefix ? '' : '?'}${qs.stringify(keyFormat.decamelize(parsedParams), {
                   sort: options.sortParams,
                   arrayFormat,
+                  arrayFormatSeparator: options.arrayFormatSeparator,
                   encode: options.encodeParams,
               })}`;
     };

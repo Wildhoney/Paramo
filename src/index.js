@@ -12,6 +12,7 @@ const defaultOptions = {
     includeDefaults: false,
     stripDefaults: false,
     arrayFormat: null,
+    arrayFormatSeparator: ',',
     stripPrefix: false,
     stripRedundant: false,
     booleanStrings: ['true', 'false'],
@@ -28,6 +29,7 @@ const defaultOptions = {
 export const option = {
     arrayFormat: {
         bracket: Symbol('bracket'),
+        separator: Symbol('separator'),
         index: Symbol('index'),
         comma: Symbol('comma'),
         none: Symbol('none'),

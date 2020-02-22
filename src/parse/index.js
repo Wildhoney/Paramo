@@ -6,7 +6,13 @@ export default function parse(types, options) {
     const arrayFormat = utils.getArrayFormat(options);
 
     return (params = utils.getDefaultParams()) => {
-        const parsedParams = keyFormat.camelize(qs.parse(params, { arrayFormat, decode: options.decodeParams }));
+        const parsedParams = keyFormat.camelize(
+            qs.parse(params, {
+                arrayFormat,
+                arrayFormatSeparator: options.arrayFormatSeparator,
+                decode: options.decodeParams,
+            }),
+        );
 
         // Including defaults should take from both the types and the parameters.
         const keys = options.includeDefaults
