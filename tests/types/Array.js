@@ -171,3 +171,20 @@ test('It should be able to handle custom separated arrays with multiple values;'
     const stringified = instance.stringify(parsed);
     t.is(stringified, '?countries=UK|RU|NZ&name=Adam');
 });
+
+test('It should be able to handle an array with defaults;', t => {
+    const types = {
+        ids: [type.Array(type.Int), [1, 2]],
+    };
+    const instance = create(types, {
+        stripDefaults: true,
+        keyFormat: option.keyFormat.snake,
+        arrayFormat: option.arrayFormat.comma,
+        splitKeys: /(?=[A-Z0-9])/,
+    });
+
+    const parsed = instance.parse('ids=1,2,3');
+    t.deepEqual(parsed, { ids: [1, 2, 3] });
+    const stringified = instance.stringify(parsed);
+    t.is(stringified, '?ids=1,2,3');
+});
