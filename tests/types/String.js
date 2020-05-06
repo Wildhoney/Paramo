@@ -5,7 +5,7 @@ const types = {
     name: type.String,
 };
 
-test('It should be able to handle String types;', t => {
+test('It should be able to handle String types;', (t) => {
     const instance = create(types);
     const parsed = instance.parse('name=Adam');
     t.deepEqual(parsed, { name: 'Adam' });

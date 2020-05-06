@@ -20,7 +20,7 @@ test.beforeEach(() => (moment.suppressDeprecationWarnings = true));
 
 test.afterEach(() => (moment.suppressDeprecationWarnings = true));
 
-test('It should be able to handle Date types;', t => {
+test('It should be able to handle Date types;', (t) => {
     const instance = create(types, { dateFormat: 'YYYY-MM-DD' });
     const parsed = instance.parse('name=Adam&birthDate=1985-10-10');
     t.deepEqual(parsed, { name: 'Adam', birthDate: moment('1985-10-10').toDate() });
@@ -28,7 +28,7 @@ test('It should be able to handle Date types;', t => {
     t.is(stringified, '?birthDate=1985-10-10&name=Adam');
 });
 
-test('It should be able to handle Unix S Date types;', t => {
+test('It should be able to handle Unix S Date types;', (t) => {
     const instance = create({ ...types, birthDate: type.Date.UnixSeconds }, { dateFormat: 'YYYY-MM-DD' });
     const parsed = instance.parse(`name=Adam&birthDate=${moment('1985-10-10').valueOf()}`);
     t.is(parsed.name, 'Adam');
@@ -37,7 +37,7 @@ test('It should be able to handle Unix S Date types;', t => {
     t.is(stringified, '?birthDate=1985-10-10&name=Adam');
 });
 
-test('It should be able to handle Unix MS Date types;', t => {
+test('It should be able to handle Unix MS Date types;', (t) => {
     const instance = create({ ...types, birthDate: type.Date.UnixMilliseconds }, { dateFormat: 'YYYY-MM-DD' });
     const parsed = instance.parse(`name=Adam&birthDate=${moment('1985-10-10').unix()}`);
     t.is(parsed.name, 'Adam');
@@ -46,14 +46,14 @@ test('It should be able to handle Unix MS Date types;', t => {
     t.is(stringified, '?birthDate=1985-10-10&name=Adam');
 });
 
-test('It should be able to sanitize Dates when the value is invalid;', t => {
+test('It should be able to sanitize Dates when the value is invalid;', (t) => {
     const instance = create(types);
     const parsed = instance.parse('name=Adam&birthDate=10th Oct 1985');
     t.deepEqual(parsed, { name: 'Adam' });
     t.is(instance.stringify({ name: 'Adam', birthDate: '10th Oct 1985' }), '?name=Adam');
 });
 
-test('It should be able to handle dates with a default value defined as a function;', t => {
+test('It should be able to handle dates with a default value defined as a function;', (t) => {
     const instance = create(
         { ...types, birthDate: [type.Date, () => moment('2020-10-10').toDate()] },
         { dateFormat: 'YYYY-MM-DD', includeDefaults: true },

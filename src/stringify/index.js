@@ -6,7 +6,7 @@ export default function stringify(types, options) {
     const keyFormat = utils.getKeyFormat(options);
     const arrayFormat = utils.getArrayFormat(options);
 
-    return params => {
+    return (params) => {
         const keys = options.includeDefaults ? Object.keys({ ...params, ...types }) : Object.keys(params);
 
         const parsedParams = keys.reduce((model, key) => {

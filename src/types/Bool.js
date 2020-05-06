@@ -1,7 +1,7 @@
 import { TypeError } from '../utils';
 
 export default {
-    toType: ({ booleanStrings: [truthy, falsy] }) => value => {
+    toType: ({ booleanStrings: [truthy, falsy] }) => (value) => {
         const typedValue = (() => {
             switch (value) {
                 case '1':
@@ -21,7 +21,7 @@ export default {
         if (typeof typedValue !== 'boolean') throw new TypeError('Invalid t.Bool');
         return typedValue;
     },
-    toString: ({ booleanStrings: [truthy, falsy] }) => value => {
+    toString: ({ booleanStrings: [truthy, falsy] }) => (value) => {
         if (typeof value !== 'boolean') throw new TypeError('Invalid t.Bool');
         return value === true ? truthy : falsy;
     },

@@ -2,7 +2,7 @@ import test from 'ava';
 import moment from 'moment';
 import { create, type, option } from '../../src';
 
-test('It should be able to parse the parameters from a simple URL string;', t => {
+test('It should be able to parse the parameters from a simple URL string;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -16,7 +16,7 @@ test('It should be able to parse the parameters from a simple URL string;', t =>
     });
 });
 
-test("It should be able to re-throw the error if it isn't related to types;", t => {
+test("It should be able to re-throw the error if it isn't related to types;", (t) => {
     const types = {
         name: () => {},
     };
@@ -25,7 +25,7 @@ test("It should be able to re-throw the error if it isn't related to types;", t 
     t.is(error.message, 'typer.toType is not a function');
 });
 
-test('It should be able to create objects with null prototype;', t => {
+test('It should be able to create objects with null prototype;', (t) => {
     const types = {
         name: type.String,
     };
@@ -37,7 +37,7 @@ test('It should be able to create objects with null prototype;', t => {
     }
 });
 
-test('It should be able to handle the inclusion of the default parameters;', t => {
+test('It should be able to handle the inclusion of the default parameters;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -56,7 +56,7 @@ test('It should be able to handle the inclusion of the default parameters;', t =
     });
 });
 
-test('It should be able to handle the removal of redundant URL parameters;', t => {
+test('It should be able to handle the removal of redundant URL parameters;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -76,7 +76,7 @@ test('It should be able to handle the removal of redundant URL parameters;', t =
     }
 });
 
-test('It should be able to handle URL parameters in a different format;', t => {
+test('It should be able to handle URL parameters in a different format;', (t) => {
     const types = {
         name: type.String,
         dateOfBirth: type.Date,

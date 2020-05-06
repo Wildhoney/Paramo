@@ -36,14 +36,14 @@ export function getKeyFormat(options) {
     const separator = isSet ? getSymbolDescription(options.keyFormat) : null;
 
     return !options.keyFormat
-        ? { camelize: a => a, decamelize: a => a }
+        ? { camelize: (a) => a, decamelize: (a) => a }
         : {
-              camelize: a => {
+              camelize: (a) => {
                   const args = { process: options.processKeys };
                   if (options.keyFormat === option.keyFormat.pascal) return humps.camelizeKeys(a, args);
                   return humps.camelizeKeys(a, { ...args, separator });
               },
-              decamelize: a => {
+              decamelize: (a) => {
                   const args = { split: options.splitKeys, process: options.processKeys };
                   if (options.keyFormat === option.keyFormat.pascal) return humps.pascalizeKeys(a, args);
                   return humps.decamelizeKeys(a, { ...args, separator });

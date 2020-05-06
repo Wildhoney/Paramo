@@ -1,7 +1,7 @@
 import { TypeError } from '../utils';
 
 export default {
-    toType: () => value => {
+    toType: () => (value) => {
         try {
             return JSON.parse(value);
         } catch {

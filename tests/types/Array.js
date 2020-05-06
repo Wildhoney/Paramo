@@ -6,7 +6,7 @@ const types = {
     countries: [type.Array(type.String), ['UK', 'RU']],
 };
 
-test('It should be able to handle comma separated arrays;', t => {
+test('It should be able to handle comma separated arrays;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.comma,
     });
@@ -16,7 +16,7 @@ test('It should be able to handle comma separated arrays;', t => {
     t.is(stringified, '?countries=UK,RU&name=Adam');
 });
 
-test('It should be able to omit the array item if it is empty;', t => {
+test('It should be able to omit the array item if it is empty;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.comma,
     });
@@ -28,7 +28,7 @@ test('It should be able to omit the array item if it is empty;', t => {
     }
 });
 
-test('It should be able to handle comma separated arrays with a single value;', t => {
+test('It should be able to handle comma separated arrays with a single value;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.comma,
     });
@@ -38,7 +38,7 @@ test('It should be able to handle comma separated arrays with a single value;', 
     t.is(stringified, '?countries=UK&name=Adam');
 });
 
-test('It should be able to handle indexed arrays;', t => {
+test('It should be able to handle indexed arrays;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.index,
     });
@@ -48,7 +48,7 @@ test('It should be able to handle indexed arrays;', t => {
     t.is(stringified, '?countries[0]=UK&countries[1]=RU&name=Adam');
 });
 
-test('It should be able to handle bracketed arrays;', t => {
+test('It should be able to handle bracketed arrays;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.bracket,
     });
@@ -58,7 +58,7 @@ test('It should be able to handle bracketed arrays;', t => {
     t.is(stringified, '?countries[]=UK&countries[]=RU&name=Adam');
 });
 
-test('It should be able to handle duplicate key arrays;', t => {
+test('It should be able to handle duplicate key arrays;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.none,
     });
@@ -68,7 +68,7 @@ test('It should be able to handle duplicate key arrays;', t => {
     t.is(stringified, '?countries=UK&countries=RU&name=Adam');
 });
 
-test('It should be able to handle duplicate key arrays with a single value;', t => {
+test('It should be able to handle duplicate key arrays with a single value;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.none,
     });
@@ -78,7 +78,7 @@ test('It should be able to handle duplicate key arrays with a single value;', t 
     t.is(stringified, '?countries=RU&name=Adam');
 });
 
-test('It should be able to handle the skipping of the defaults;', t => {
+test('It should be able to handle the skipping of the defaults;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.comma,
         stripDefaults: true,
@@ -88,7 +88,7 @@ test('It should be able to handle the skipping of the defaults;', t => {
     t.is(instance.stringify({ name: 'Adam', countries: ['RU', 'UK'] }), '?name=Adam');
 });
 
-test('It should be able to handle the skipping of the defaults for sequences;', t => {
+test('It should be able to handle the skipping of the defaults for sequences;', (t) => {
     const instance = create(
         { ...types, countries: [type.Array.Sequence(type.String), ['UK', 'RU']] },
         {
@@ -101,14 +101,14 @@ test('It should be able to handle the skipping of the defaults for sequences;', 
     t.is(instance.stringify({ name: 'Adam', countries: ['RU', 'UK'] }), '?name=Adam&countries=RU,UK');
 });
 
-test('It should be able to sanitize arrays when its values are invalid;', t => {
+test('It should be able to sanitize arrays when its values are invalid;', (t) => {
     const instance = create({ ...types, countries: type.Array(type.Int) }, { arrayFormat: option.arrayFormat.comma });
     const parsed = instance.parse('name=Adam&countries=UK,RU');
     t.deepEqual(parsed, { name: 'Adam' });
     t.is(instance.stringify({ name: 'Adam', countries: 'UK' }), '?name=Adam');
 });
 
-test('It should be able to default to an empty array instead of null when not specified;', t => {
+test('It should be able to default to an empty array instead of null when not specified;', (t) => {
     const instance = create(
         { ...types, countries: type.Array(type.String) },
         {
@@ -122,7 +122,7 @@ test('It should be able to default to an empty array instead of null when not sp
     t.is(stringified, '?name=Adam');
 });
 
-test('It should be able to handle the defaults;', t => {
+test('It should be able to handle the defaults;', (t) => {
     const types = { name: type.String, ratings: [type.Array(type.Int), [1, 2, 3]] };
 
     const instance = create(types, {
@@ -150,7 +150,7 @@ test('It should be able to handle the defaults;', t => {
     }
 });
 
-test('It should be able to handle custom separated arrays with a single value;', t => {
+test('It should be able to handle custom separated arrays with a single value;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.separator,
         arrayFormatSeparator: '|',
@@ -161,7 +161,7 @@ test('It should be able to handle custom separated arrays with a single value;',
     t.is(stringified, '?countries=UK&name=Adam');
 });
 
-test('It should be able to handle custom separated arrays with multiple values;', t => {
+test('It should be able to handle custom separated arrays with multiple values;', (t) => {
     const instance = create(types, {
         arrayFormat: option.arrayFormat.separator,
         arrayFormatSeparator: '|',
@@ -172,7 +172,7 @@ test('It should be able to handle custom separated arrays with multiple values;'
     t.is(stringified, '?countries=UK|RU|NZ&name=Adam');
 });
 
-test('It should be able to handle an array with defaults;', t => {
+test('It should be able to handle an array with defaults;', (t) => {
     const types = {
         ids: [type.Array(type.Int), [1, 2]],
     };

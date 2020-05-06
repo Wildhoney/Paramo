@@ -1,6 +1,6 @@
 import { TypeError } from '../utils';
 
-const raise = message => {
+const raise = (message) => {
     throw new TypeError(message);
 };
 
@@ -11,11 +11,11 @@ export default class Type {
     }
 
     toType(options) {
-        return value => this.parser({ value, options, raise });
+        return (value) => this.parser({ value, options, raise });
     }
 
     toString(options) {
-        return value => this.stringifier({ value, options, raise });
+        return (value) => this.stringifier({ value, options, raise });
     }
 
     setParse(fn) {

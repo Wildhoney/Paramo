@@ -6,7 +6,7 @@ const types = {
     profile: type.JSON,
 };
 
-test('It should be able to handle JSON types;', t => {
+test('It should be able to handle JSON types;', (t) => {
     const instance = create(types);
     const model = {
         name: 'Adam',
@@ -21,7 +21,7 @@ test('It should be able to handle JSON types;', t => {
     t.deepEqual(parsed, model);
 });
 
-test('It should be able to sanitize JSON when the value is invalid;', t => {
+test('It should be able to sanitize JSON when the value is invalid;', (t) => {
     const instance = create(types);
     const parsed = instance.parse('name=Adam&profile=34,London');
     t.deepEqual(parsed, { name: 'Adam' });

@@ -2,19 +2,19 @@ import moment from 'moment';
 import { TypeError } from '../utils';
 
 const Type = {
-    toType: () => value => {
+    toType: () => (value) => {
         const typedValue = moment.isMoment(value) ? value.toDate() : moment(value).toDate();
         if (Number.isNaN(typedValue.getTime())) throw new TypeError('Invalid t.Date');
         return typedValue;
     },
-    toString: ({ dateFormat }) => value => {
+    toString: ({ dateFormat }) => (value) => {
         if (!(value instanceof Date)) throw new TypeError('Invalid t.Date');
         return moment(value).format(dateFormat);
     },
 };
 
 Type.UnixSeconds = {
-    toType: () => value => {
+    toType: () => (value) => {
         const typedValue = moment(Number(value));
         return Type.toType()(typedValue);
     },
@@ -22,7 +22,7 @@ Type.UnixSeconds = {
 };
 
 Type.UnixMilliseconds = {
-    toType: () => value => {
+    toType: () => (value) => {
         const typedValue = moment.unix(Number(value));
         return Type.toType()(typedValue);
     },

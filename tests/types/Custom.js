@@ -5,7 +5,7 @@ const Location = new Type();
 
 Location.setParse(({ value, raise }) => {
     if (!value.includes(',')) raise('Invalid t.Location');
-    return value.split(' ').map(a => a.split(',').map(Number));
+    return value.split(' ').map((a) => a.split(',').map(Number));
 });
 
 Location.setStringify(({ value, raise }) => {
@@ -21,7 +21,7 @@ const types = {
     location: Location,
 };
 
-test('It should be able to handle custom types;', t => {
+test('It should be able to handle custom types;', (t) => {
     const instance = create(types);
     const model = {
         name: 'Adam',
@@ -37,7 +37,7 @@ test('It should be able to handle custom types;', t => {
     t.deepEqual(parsed, model);
 });
 
-test('It should be able to sanitize custom types when the value is invalid;', t => {
+test('It should be able to sanitize custom types when the value is invalid;', (t) => {
     const instance = create(types);
     const stringified = instance.stringify({ name: 'Adam', location: [] });
     t.is(stringified, '?name=Adam');
@@ -45,7 +45,7 @@ test('It should be able to sanitize custom types when the value is invalid;', t 
     t.deepEqual(parsed, { name: 'Adam' });
 });
 
-test('It should be able to apply the defaults for custom types;', t => {
+test('It should be able to apply the defaults for custom types;', (t) => {
     const instance = create({ ...types, location: [Location, [[1, 2]]] }, { includeDefaults: true });
     const stringified = instance.stringify({ name: 'Adam', location: false });
     t.snapshot(stringified);
@@ -53,7 +53,7 @@ test('It should be able to apply the defaults for custom types;', t => {
     t.deepEqual(parsed, { name: 'Adam', location: [[1, 2]] });
 });
 
-test('It should be able to skip applying defaults for custom types if default is invalid;', t => {
+test('It should be able to skip applying defaults for custom types if default is invalid;', (t) => {
     const instance = create({ ...types, location: [Location, 'an invalid default'] }, { includeDefaults: true });
     const stringified = instance.stringify({ name: 'Adam', location: false });
     t.is(stringified, '?name=Adam');

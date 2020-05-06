@@ -2,7 +2,7 @@ import test from 'ava';
 import moment from 'moment';
 import { create, type, option } from '../../src';
 
-test('It should be able to stringify the parameters from a simple model;', t => {
+test('It should be able to stringify the parameters from a simple model;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -12,7 +12,7 @@ test('It should be able to stringify the parameters from a simple model;', t => 
     t.is(instance.stringify({ name: 'Adam', age: 34, isDeveloper: true }), '?name=Adam&age=34&isDeveloper=true');
 });
 
-test('It should yield an empty string if there are not stringified parameters;', t => {
+test('It should yield an empty string if there are not stringified parameters;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -21,7 +21,7 @@ test('It should yield an empty string if there are not stringified parameters;',
     t.is(instance.stringify({ name: null, age: null }), '');
 });
 
-test('It should be able to handle the stripping of default parameters;', t => {
+test('It should be able to handle the stripping of default parameters;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -35,7 +35,7 @@ test('It should be able to handle the stripping of default parameters;', t => {
     }
 });
 
-test('It should be able to handle the stripping of default parameters for arrays;', t => {
+test('It should be able to handle the stripping of default parameters for arrays;', (t) => {
     const types = {
         name: type.String,
         countries: [type.Array(type.String), ['UK', 'RU']],
@@ -58,7 +58,7 @@ test('It should be able to handle the stripping of default parameters for arrays
     }
 });
 
-test('It should be able to handle the stripping of default parameters for sequenced arrays;', t => {
+test('It should be able to handle the stripping of default parameters for sequenced arrays;', (t) => {
     const types = {
         name: type.String,
         countries: [type.Array.Sequence(type.String), ['UK', 'RU']],
@@ -81,7 +81,7 @@ test('It should be able to handle the stripping of default parameters for sequen
     }
 });
 
-test('It should be able to handle the stripping of default parameters for tuples;', t => {
+test('It should be able to handle the stripping of default parameters for tuples;', (t) => {
     const types = {
         name: type.String,
         profile: [type.Tuple(type.String, type.Int), ['Software Developer', 34]],
@@ -100,7 +100,7 @@ test('It should be able to handle the stripping of default parameters for tuples
     }
 });
 
-test('It should be able to handle the inclusion of the default parameters;', t => {
+test('It should be able to handle the inclusion of the default parameters;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -119,7 +119,7 @@ test('It should be able to handle the inclusion of the default parameters;', t =
     }
 });
 
-test('It should be able to specify the removal of parameters by passing null values;', t => {
+test('It should be able to specify the removal of parameters by passing null values;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -130,7 +130,7 @@ test('It should be able to specify the removal of parameters by passing null val
     t.is(instance.stringify({ name: null, age: 34, city: null }), '?age=34');
 });
 
-test('It should be able to handle the removal of redundant URL parameters;', t => {
+test('It should be able to handle the removal of redundant URL parameters;', (t) => {
     const types = {
         name: type.String,
         age: type.Int,
@@ -143,7 +143,7 @@ test('It should be able to handle the removal of redundant URL parameters;', t =
     }
 });
 
-test('It should be able to handle URL parameters in a different format;', t => {
+test('It should be able to handle URL parameters in a different format;', (t) => {
     const types = {
         name: type.String,
         dateOfBirth: type.Date,
@@ -169,7 +169,7 @@ test('It should be able to handle URL parameters in a different format;', t => {
     }
 });
 
-test('It should be able to return the typed default value if the value is invalid;', t => {
+test('It should be able to return the typed default value if the value is invalid;', (t) => {
     const types = {
         name: type.String,
         age: [type.Int, 34],
@@ -184,7 +184,7 @@ test('It should be able to return the typed default value if the value is invali
     t.is(instance.stringify({ name: 'Adam', isDeveloper: 'yes' }), '?name=Adam&isDeveloper=yup&age=34');
 });
 
-test('It should be able to handle the stringifying when the values are arrays;', t => {
+test('It should be able to handle the stringifying when the values are arrays;', (t) => {
     const instance = create({
         countries: [type.Array(type.String), []],
     });

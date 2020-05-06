@@ -1,16 +1,16 @@
 import { equals } from 'ramda';
 import { TypeError, isInvalidArray } from '../utils';
 
-const Type = type => ({
+const Type = (type) => ({
     defaultValue: [],
-    toType: options => value => {
+    toType: (options) => (value) => {
         if (isInvalidArray(value, options)) throw new TypeError('Invalid t.Array');
         const values = Array.isArray(value) ? value : [].concat(value);
-        return values.map(value => type.toType(options)(value));
+        return values.map((value) => type.toType(options)(value));
     },
-    toString: options => values => {
+    toString: (options) => (values) => {
         if (!Array.isArray(values)) throw new TypeError('Invalid t.Array');
-        return values.map(value => type.toString(options)(value));
+        return values.map((value) => type.toString(options)(value));
     },
     isSame: (a, b) => {
         const x = Array.isArray(a) ? [...a].sort() : a;
@@ -19,7 +19,7 @@ const Type = type => ({
     },
 });
 
-Type.Sequence = type => ({
+Type.Sequence = (type) => ({
     defaultValue: [],
     toType: Type(type).toType,
     toString: Type(type).toString,
